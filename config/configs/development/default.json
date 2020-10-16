@@ -1,0 +1,4 @@
+{
+  "apiBasePath": "http://localhost:7001",
+  "tokenKey": "tianjia_token"
+}
