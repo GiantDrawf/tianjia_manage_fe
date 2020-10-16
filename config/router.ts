@@ -17,7 +17,6 @@ export default [
       {
         path: '/',
         component: '../layouts/BasicLayout',
-        authority: ['admin', 'user'],
         routes: [
           {
             path: '/',
@@ -27,13 +26,15 @@ export default [
             path: '/welcome',
             name: 'welcome',
             icon: 'smile',
+            hideInMenu: true,
             component: './Welcome',
           },
           {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
+            name: 'usermanagement',
+            path: '/usermanagement',
+            icon: 'user',
+            authority: ['admin'],
+            component: './user/management',
           },
           {
             component: './404',

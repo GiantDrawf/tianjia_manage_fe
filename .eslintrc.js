@@ -8,5 +8,6 @@ module.exports = {
   rules: {
     'no-console': 0,
     '@typescript-eslint/dot-notation': 0,
+    '@typescript-eslint/no-unused-expressions': 0,
   },
 };
