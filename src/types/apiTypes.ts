@@ -13,3 +13,30 @@ export interface AccountInfo extends BaseResponse {
     roles?: string;
   };
 }
+
+export interface UserItem {
+  name: string;
+  role: string;
+  password?: string;
+}
+
+export interface Pagination {
+  current: number;
+  pageSize: number;
+  total: number;
+}
+
+export interface UserList extends BaseResponse {
+  data: {
+    list: UserItem[];
+    pagination: Pagination;
+  };
+}
+
+export interface GetUserListParams {
+  query: {
+    name?: string;
+    role?: string;
+  };
+  pagination: { page: number; pageSize: number };
+}

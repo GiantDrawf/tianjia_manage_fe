@@ -7,6 +7,7 @@ import cookies from '@/utils/cookie';
 
 interface SecurityLayoutProps extends ConnectProps {
   loading?: boolean;
+  username: string;
   dispatch: Dispatch;
 }
 
@@ -23,9 +24,13 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, username } = this.props;
 
-    if (cookies.get(tokenKey)) {
+    if (username) {
+      this.setState({
+        isReady: true,
+      });
+    } else if (cookies.get(tokenKey)) {
       dispatch({
         type: 'login/getRole',
         payload: cookies.get(tokenKey),
@@ -58,6 +63,7 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
   }
 }
 
-export default connect(({ loading }: ConnectState) => ({
+export default connect(({ loading, login }: ConnectState) => ({
   loading: loading.models.user,
+  username: login.name,
 }))(SecurityLayout);

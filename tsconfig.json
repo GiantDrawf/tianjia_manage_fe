@@ -28,11 +28,19 @@
     "test/**/*",
     "__test__/**/*",
     "typings/**/*",
-    "config/**/*",
     ".eslintrc.js",
     ".stylelintrc.js",
     ".prettierrc.js",
     "jest.config.js"
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "src/.umi/*", "webpack", "jest"]
+  "exclude": [
+    "config/**/*",
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    "src/.umi/*",
+    "webpack",
+    "jest"
+  ]
 }

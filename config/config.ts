@@ -5,6 +5,7 @@ import proxy from './proxy';
 import Routes from './router';
 
 const { NODE_ENV } = process.env;
+// @ts-ignore
 const configs = JSON.parse(decodeURIComponent(process.argv[3]));
 
 export default defineConfig({

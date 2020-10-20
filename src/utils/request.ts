@@ -66,6 +66,11 @@ const errorHandler = (error: { response: Response }): Response => {
  * 配置request请求时的默认参数
  */
 const request = extend({
+  headers: cookie.get(tokenKey)
+    ? {
+        Authorization: `Bearer ${cookie.get(tokenKey)}`,
+      }
+    : {},
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
