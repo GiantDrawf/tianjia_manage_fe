@@ -1,4 +1,4 @@
 {
-  "apiBasePath": "htttp://www.tianjia88.cn",
+  "apiBasePath": "http://49.234.208.190:7001",
   "tokenKey": "tianjia_token_prod"
 }
