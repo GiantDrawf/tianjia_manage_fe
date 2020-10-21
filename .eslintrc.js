@@ -15,5 +15,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 0,
     'prefer-promise-reject-errors': 0,
     'no-return-await': 0,
+    'no-param-reassign': 0,
   },
 };

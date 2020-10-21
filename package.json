@@ -4,7 +4,7 @@
   "description": "Tianjia Management Platform",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
-    "build": "cross-env NODE_ENV=production umi build",
+    "build": "cross-env NODE_ENV=production node ./bin/build.js",
     "deploy": "npm run site && npm run gh-pages",
     "dev": "npm run start:dev",
     "fetch:blocks": "pro fetch-blocks && npm run prettier",
@@ -19,7 +19,7 @@
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "precommit": "lint-staged",
     "prettier": "prettier -c --write \"src/**/*\"",
-    "start": "node ./bin/dev.js",
+    "start": "cross-env NODE_ENV=development MOCK=none UMI_UI=none node ./bin/dev.js",
     "start:dev": "cross-env NODE_ENV=development MOCK=none umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "start:no-ui": "cross-env UMI_UI=none umi dev",
@@ -33,12 +33,13 @@
   },
   "author": "zhujian1995@outlook.com",
   "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
-      "prettier --write"
-    ]
+    "**/*.{js,jsx,ts,tsx}": "eslint"
   },
   "browserslist": [
     "> 1%",
@@ -53,6 +54,9 @@
     "@umijs/route-utils": "^1.0.32",
     "antd": "^4.6.3",
     "classnames": "^2.2.6",
+    "commitizen": "^4.2.2",
+    "cz-emoji": "^1.2.2",
+    "husky": "^4.3.0",
     "lodash": "^4.17.11",
     "moment": "^2.29.1",
     "omit.js": "^2.0.2",
@@ -105,6 +109,87 @@
   },
   "engines": {
     "node": ">=10.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-emoji"
+    },
+    "cz-emoji": {
+      "types": [
+        {
+          "emoji": "\t🌟",
+          "code": ":star2:",
+          "description": "\tA new feature",
+          "name": "feat"
+        },
+        {
+          "emoji": "\t🐞",
+          "code": ":beetle:",
+          "description": "\tA bug fix",
+          "name": "fix"
+        },
+        {
+          "emoji": "\t🎨",
+          "code": ":art:",
+          "description": "\tNeither fixes a bug nor adds a feature",
+          "name": "refactor"
+        },
+        {
+          "emoji": "\t🚓",
+          "code": ":police_car:",
+          "description": "\t Testing improved with new or fixed tests",
+          "name": "test"
+        },
+        {
+          "emoji": "\t🔩",
+          "code": ":nut_and_bolt:",
+          "description": "\tDoesn't modify src or test files",
+          "name": "chore"
+        },
+        {
+          "emoji": "\t💰",
+          "code": ":moneybag:",
+          "description": "\tImproves performance with this change",
+          "name": "perf"
+        },
+        {
+          "emoji": "\t🚥",
+          "code": ":traffic_light:",
+          "description": "\tCI config files and scripts",
+          "name": "ci"
+        },
+        {
+          "emoji": "\t♻️",
+          "code": ":recycle:",
+          "description": "\tOptimize workflow",
+          "name": "workflow"
+        },
+        {
+          "emoji": "\t🚀",
+          "code": ":rocket:",
+          "description": "\tBuild system config or external dependencies",
+          "name": "build"
+        },
+        {
+          "emoji": "\t📚",
+          "code": ":books:",
+          "description": "\tDocumentation change",
+          "name": "docs"
+        },
+        {
+          "emoji": "\t💊",
+          "code": ":pill:",
+          "description": "\tReverts a previous commit",
+          "name": "revert"
+        },
+        {
+          "emoji": "\t🎉",
+          "code": ":tada:",
+          "description": "\tInitialize a new package.",
+          "name": "init"
+        }
+      ]
+    }
   },
   "checkFiles": [
     "src/**/*.js*",

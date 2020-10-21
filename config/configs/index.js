@@ -4,7 +4,6 @@
 const glob = require('glob');
 const path = require('path');
 const os = require('os');
-const moment = require('moment');
 
 const env = process.env.NODE_ENV || 'development';
 const pattern = path.join(__dirname, env, '/**/*.json');

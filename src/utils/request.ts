@@ -2,12 +2,18 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { extend } from 'umi-request';
+import { extend, RequestOptionsInit } from 'umi-request';
 import { notification } from 'antd';
 import { history } from 'umi';
 import { stringify } from 'querystring';
 import cookie from '@/utils/cookie';
 import { removeAuthority } from './authority';
+
+declare module 'umi-request' {
+  interface RequestOptionsInit {
+    noToken?: boolean;
+  }
+}
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -66,13 +72,25 @@ const errorHandler = (error: { response: Response }): Response => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  headers: cookie.get(tokenKey)
-    ? {
-        Authorization: `Bearer ${cookie.get(tokenKey)}`,
-      }
-    : {},
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
+
+/**
+ * 拦截所有的请求，带上token头信息
+ */
+request.interceptors.request.use(
+  (url: string, options: RequestOptionsInit = { noToken: false }) => {
+    if (!options?.noToken) {
+      // @ts-ignore
+      options.headers.Authorization = `Bearer ${cookie.get(tokenKey)}`;
+    }
+
+    return {
+      url,
+      options: { ...options },
+    };
+  },
+);
 
 export default request;

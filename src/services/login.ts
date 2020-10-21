@@ -12,10 +12,11 @@ export interface LoginParamsType {
  * 用户登录
  * @param params
  */
-export async function accountLogin(params: LoginParamsType): Promise<AccountInfo> {
-  return request(`${apiBasePath}/api/login`, {
+export async function accountLogin(params: LoginParamsType) {
+  return request<AccountInfo>(`${apiBasePath}/api/user/login`, {
     method: 'POST',
     data: params,
+    noToken: true,
   });
 }
 
@@ -23,5 +24,5 @@ export async function accountLogin(params: LoginParamsType): Promise<AccountInfo
  * 获取角色
  */
 export async function getRole() {
-  return request(`${apiBasePath}/api/getRole`);
+  return request(`${apiBasePath}/api/user/getRole`);
 }

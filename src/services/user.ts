@@ -10,7 +10,11 @@ const { apiBasePath } = process['CONFIG'];
  */
 export const useUserList = (params: GetUserListParams) => {
   return useSWR<{ data: UserList }>([`${apiBasePath}/api/user/query`, params], {
-    fetcher: (url: string) => request(url, { method: 'POST', data: params }),
+    fetcher: (url: string) =>
+      request(url, {
+        method: 'POST',
+        data: params,
+      }),
   });
 };
 

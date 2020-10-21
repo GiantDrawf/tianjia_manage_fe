@@ -14,6 +14,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
@@ -41,6 +42,7 @@
     "scripts",
     "src/.umi/*",
     "webpack",
-    "jest"
+    "jest",
+    "bin/**/*"
   ]
 }
