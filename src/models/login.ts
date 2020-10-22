@@ -44,9 +44,9 @@ const Model: LoginModelType = {
       });
       // Login successfully
       if (response.code === 200) {
-        // 记录token 取消前端记cookie，统一由接口set
-        // const token = response.data.token || '';
-        // cookies.set(tokenKey, token);
+        // 记录token
+        const token = response.data.token || '';
+        cookies.set(tokenKey, token);
         checkRedirect();
       } else {
         message.error(response.msg);
