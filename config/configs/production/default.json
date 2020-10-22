@@ -1,4 +1,4 @@
 {
-  "apiBasePath": "http://api.admin.tianjia.live",
+  "apiBasePath": "http://api.admin.tianjia.com",
   "tokenKey": "tianjia_token_prod"
 }
