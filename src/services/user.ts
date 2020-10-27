@@ -9,7 +9,7 @@ const { apiBasePath } = process['CONFIG'];
  * @param params
  */
 export const useUserList = (params: GetUserListParams) => {
-  return useSWR<{ data: UserList }>([`${apiBasePath}/api/user/query`, params], {
+  return useSWR<{ data: UserList }>([`${apiBasePath}/platform_api/user/query`, params], {
     fetcher: (url: string) =>
       request(url, {
         method: 'POST',
@@ -23,7 +23,7 @@ export const useUserList = (params: GetUserListParams) => {
  * @param params
  */
 export async function deleteUser(params: { name: string }): Promise<BaseResponse> {
-  return request(`${apiBasePath}/api/user/delete`, {
+  return request(`${apiBasePath}/platform_api/user/delete`, {
     method: 'POST',
     data: params,
   });
@@ -34,7 +34,7 @@ export async function deleteUser(params: { name: string }): Promise<BaseResponse
  * @param params
  */
 export async function updateUser(params: UserItem): Promise<BaseResponse> {
-  return request(`${apiBasePath}/api/user/update`, {
+  return request(`${apiBasePath}/platform_api/user/update`, {
     method: 'POST',
     data: params,
   });
@@ -45,7 +45,7 @@ export async function updateUser(params: UserItem): Promise<BaseResponse> {
  * @param params
  */
 export async function addUser(params: UserItem): Promise<BaseResponse> {
-  return request(`${apiBasePath}/api/user/add`, {
+  return request(`${apiBasePath}/platform_api/user/add`, {
     method: 'POST',
     data: params,
   });
@@ -56,5 +56,5 @@ export async function addUser(params: UserItem): Promise<BaseResponse> {
  * @param params
  */
 export async function checkName(name: string): Promise<BaseResponse> {
-  return request(`${apiBasePath}/api/user/checkname?name=${name}`);
+  return request(`${apiBasePath}/platform_api/user/checkname?name=${name}`);
 }

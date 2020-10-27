@@ -13,7 +13,7 @@ export interface LoginParamsType {
  * @param params
  */
 export async function accountLogin(params: LoginParamsType) {
-  return request<AccountInfo>(`${apiBasePath}/api/user/login`, {
+  return request<AccountInfo>(`${apiBasePath}/platform_api/user/login`, {
     method: 'POST',
     data: params,
     noToken: true,
@@ -24,5 +24,5 @@ export async function accountLogin(params: LoginParamsType) {
  * 获取角色
  */
 export async function getRole() {
-  return request(`${apiBasePath}/api/user/getRole`);
+  return request(`${apiBasePath}/platform_api/user/getRole`);
 }
