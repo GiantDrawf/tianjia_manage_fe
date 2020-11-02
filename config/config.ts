@@ -9,6 +9,7 @@ const { NODE_ENV } = process.env;
 const configs = JSON.parse(decodeURIComponent(process.argv[3]));
 
 export default defineConfig({
+  history: { type: 'hash' },
   hash: true,
   antd: {},
   dva: {
