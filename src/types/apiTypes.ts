@@ -40,3 +40,18 @@ export interface GetUserListParams {
   };
   pagination: { page: number; pageSize: number };
 }
+
+export interface NoticeItem {
+  isRead: boolean;
+  createTime: string;
+  msgId: string;
+  msgFrom: string;
+  title: string;
+  content: string;
+  name: string;
+  contact: string;
+}
+
+export interface AllNotice extends BaseResponse {
+  data: NoticeItem[];
+}

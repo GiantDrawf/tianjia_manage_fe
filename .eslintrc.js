@@ -16,5 +16,6 @@ module.exports = {
     'prefer-promise-reject-errors': 0,
     'no-return-await': 0,
     'no-param-reassign': 0,
+    'global-require': 0,
   },
 };

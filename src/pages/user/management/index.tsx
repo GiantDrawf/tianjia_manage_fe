@@ -39,7 +39,6 @@ export default function UserManagement() {
     showSizeChanger: true,
     showQuickJumper: true,
     onChange: handlePageChange,
-    onShowSizeChange: handlePageChange,
   };
   const handleUserChange = (record: UserItem) => {
     setUserItemRecord(record);
