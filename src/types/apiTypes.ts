@@ -43,6 +43,7 @@ export interface GetUserListParams {
 
 export interface NoticeItem {
   isRead: boolean;
+  isShow: boolean;
   createTime: string;
   msgId: string;
   msgFrom: string;
@@ -50,8 +51,15 @@ export interface NoticeItem {
   content: string;
   name: string;
   contact: string;
+  replay: string;
+  replayTime: string;
 }
 
 export interface AllNotice extends BaseResponse {
   data: NoticeItem[];
+}
+
+export interface GetNoticeParams {
+  query: { title?: string; content?: string };
+  pagination: { page: number; pageSize: number };
 }

@@ -1,0 +1,23 @@
+.noReadLine {
+  background-color: #f3d2d2;
+}
+
+.contentColumn {
+  max-width: 300px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.expandedRow {
+  :global(.ant-table-cell) {
+    padding: 10px 20px;
+    background-color: #f0ead4;
+  }
+  :global(.ant-descriptions-view) {
+    background-color: #fff;
+  }
+}

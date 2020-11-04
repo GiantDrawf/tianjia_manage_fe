@@ -12,4 +12,5 @@ export default {
   'menu.home': '首页',
   'menu.list.table-list': '查询表格',
   'menu.usermanagement': '用户管理',
+  'menu.notice': '消息管理',
 };

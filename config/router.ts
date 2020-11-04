@@ -30,6 +30,13 @@ export default [
             component: './Welcome',
           },
           {
+            name: 'notice',
+            path: '/notice',
+            icon: 'message',
+            authority: ['admin'],
+            component: './notice',
+          },
+          {
             name: 'usermanagement',
             path: '/usermanagement',
             icon: 'user',

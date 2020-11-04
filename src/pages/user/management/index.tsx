@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useCallback } from 'react';
 import { Button, Divider, message, Popconfirm, Row, Table } from 'antd';
 import { deleteUser, useUserList } from '@/services/user';
 import { GetUserListParams, UserItem } from '@/types/apiTypes';
 import { Role } from '@/types/pageTypes';
-import { roleMap } from '@/utils/const';
+import { roleMap, userSearchFormItems } from '@/utils/const';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import SearchForm from './searchForm';
+import QueryList, { OnSearch } from '@/components/QueryList';
 import CreateForm from './createForm';
 
 /**
@@ -21,25 +21,19 @@ export default function UserManagement() {
       pageSize: 10,
     },
   });
+  const onSearch = useCallback(({ searchParam, pageInfo }: OnSearch) => {
+    setQueryParams({
+      query: { ...searchParam },
+      pagination: {
+        page: pageInfo.pageNo,
+        pageSize: pageInfo.pageSize || 10,
+      },
+    });
+  }, []);
   const { isValidating: loading, data: listData, mutate: refreshList } = useUserList(queryParams);
   const dataSource = listData?.data?.list || [];
-  const handlePageChange = (page: number, pageSize?: number) => {
-    setQueryParams((prevQueryParams: GetUserListParams) => {
-      return {
-        ...prevQueryParams,
-        pagination: { page, pageSize: pageSize || 10 },
-      };
-    });
-  };
-  const paginationProps = {
-    current: queryParams.pagination.page,
-    total: listData?.data?.pagination?.total || 0,
-    showTotal: (total: number) => `共 ${total} 条`,
-    pageSize: queryParams.pagination.pageSize,
-    showSizeChanger: true,
-    showQuickJumper: true,
-    onChange: handlePageChange,
-  };
+  const total = listData?.data?.pagination?.total || 0;
+
   const handleUserChange = (record: UserItem) => {
     setUserItemRecord(record);
     setCreateModalVisible(true);
@@ -99,21 +93,26 @@ export default function UserManagement() {
 
   return (
     <Fragment>
-      <SearchForm
-        setQueryParams={setQueryParams}
-        newActionBtn={
-          <Button type="primary" onClick={() => setCreateModalVisible(true)}>
-            新增用户
-          </Button>
-        }
-      />
-      <Table
-        columns={userColumns}
-        loading={loading}
-        dataSource={dataSource}
-        rowKey="name"
-        pagination={paginationProps}
-      />
+      <QueryList
+        {...{
+          formItem: userSearchFormItems,
+          total,
+          onSearch,
+          plusAction: (
+            <Button type="primary" onClick={() => setCreateModalVisible(true)}>
+              新增用户
+            </Button>
+          ),
+        }}
+      >
+        <Table
+          columns={userColumns}
+          loading={loading}
+          dataSource={dataSource}
+          rowKey="name"
+          pagination={false}
+        />
+      </QueryList>
       {createModalVisible ? (
         <CreateForm
           visible={createModalVisible}

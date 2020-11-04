@@ -1,7 +1,7 @@
 import { ConnectState } from '@/models/connect';
 import { NoticeItem } from '@/types/apiTypes';
 import { BellOutlined, CommentOutlined } from '@ant-design/icons';
-import { Badge, Button, List, Row } from 'antd';
+import { Badge, Button, List, Row, Empty } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect, Dispatch } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
@@ -27,12 +27,7 @@ const GlobalHeaderRight: React.SFC<NoticeIconProps> = (props) => {
       <List
         bordered
         locale={{
-          emptyText: (
-            <div className={styles.hasRead}>
-              <img src={require('@/assets/noReadMsg.svg')} alt="" />
-              你已查看所有通知~
-            </div>
-          ),
+          emptyText: <Empty description="暂无未读消息~" />,
         }}
         dataSource={allNotice}
         renderItem={(itemNotice: NoticeItem) => (

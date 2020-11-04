@@ -6,11 +6,8 @@ import FormRender, { FormItem } from '../FormRender';
 import Pagination from '../Pagination';
 import styles from './index.less';
 
-export { FormItem } from '../FormRender';
-
-export type PageInfo = { pageNo: number; pageSize: number }
-export type OnSearch = { searchParam: {[keyname: string]: any}; pageInfo: PageInfo }
-
+export type PageInfo = { pageNo: number; pageSize?: number };
+export type OnSearch = { searchParam: { [keyname: string]: any }; pageInfo: PageInfo };
 
 export interface Props {
   formItem: FormItem[];
@@ -18,17 +15,28 @@ export interface Props {
   onSearch: (params: OnSearch) => any;
   children: ReactElement;
   plusAction?: ReactElement | ReactElement[];
-  initialValues?: {[keyName: string]: any};
+  initialValues?: { [keyName: string]: any };
   actionsStyle?: CSSProperties;
   formRef?: MutableRefObject<any>;
   onFieldsChange?: (changedFields: FieldData[], allFields: FieldData[]) => void;
 }
 
-
 const QueryList: FC<Props> = (props: Props) => {
-  const { formItem, total, onSearch, children, plusAction, initialValues = {}, actionsStyle = {}, onFieldsChange } = props;
+  const {
+    formItem,
+    total,
+    onSearch,
+    children,
+    plusAction,
+    initialValues = {},
+    actionsStyle = {},
+    onFieldsChange,
+  } = props;
   const { pageNo: defaultPageNo, pageSize: defaultPageSize, ...defaultValues } = initialValues;
-  const [pageInfo, setPageInfo] = useState<PageInfo>({ pageNo: defaultPageNo || 1, pageSize: defaultPageSize || 20 });
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
+    pageNo: defaultPageNo || 1,
+    pageSize: defaultPageSize || 20,
+  });
   const searchParam = useRef(defaultValues);
   const defaultRef = useRef<any>(null);
   const formRef = props.formRef !== undefined ? props.formRef : defaultRef;
@@ -42,7 +50,6 @@ const QueryList: FC<Props> = (props: Props) => {
     }
   };
 
-
   // 仅在分页改变时才触发搜索, didMount不需要搜索
   useUpdateEffect(() => {
     onSearch({ searchParam: searchParam.current, pageInfo });
@@ -55,32 +62,40 @@ const QueryList: FC<Props> = (props: Props) => {
 
   return (
     <div>
-      <div className={ styles.header }>
-        <FormRender ref={ formRef } items={ formItem } onPressEnter={ search } initialValues={ defaultValues } onFieldsChange={ onFieldsChange } />
-        <div className={ styles.actions }
-          style={{ paddingBottom: '12px', ...actionsStyle }}
-        >
+      <div className={styles.header}>
+        <FormRender
+          ref={formRef}
+          items={formItem}
+          onPressEnter={search}
+          initialValues={defaultValues}
+          onFieldsChange={onFieldsChange}
+        />
+        <div className={styles.actions} style={{ paddingBottom: '12px', ...actionsStyle }}>
           {plusAction || <div />}
           <div>
-            <Button onClick={ handleReset } key="reset" style={{ marginRight: '10px' }}>重置</Button>
-            <Button onClick={ search } type="primary" key="query">查询</Button>
+            <Button onClick={handleReset} key="reset" style={{ marginRight: '10px' }}>
+              重置
+            </Button>
+            <Button onClick={search} type="primary" key="query">
+              查询
+            </Button>
           </div>
         </div>
       </div>
-      <div className={ styles.body }>
-        {children}
-      </div>
-      {
-        (total > 0) && (
-          <Pagination total={ total } pageSize={ pageInfo.pageSize } current={ pageInfo.pageNo } showSizeChanger={ true }
-            onPageChange={ (pageNo: number, pageSize: number) => {
-              setPageInfo({ pageNo, pageSize });
-            } } />
-        )
-      }
+      <div className={styles.body}>{children}</div>
+      {total > 0 && (
+        <Pagination
+          total={total}
+          pageSize={pageInfo.pageSize}
+          current={pageInfo.pageNo}
+          showSizeChanger
+          onPageChange={(pageNo: number, pageSize?: number) => {
+            setPageInfo({ pageNo, pageSize });
+          }}
+        />
+      )}
     </div>
   );
-  
 };
 
 export default QueryList;

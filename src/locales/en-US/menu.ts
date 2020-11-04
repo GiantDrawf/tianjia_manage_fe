@@ -12,4 +12,5 @@ export default {
   'menu.home': 'Home',
   'menu.list.table-list': 'Search Table',
   'menu.usermanagement': 'User Management',
+  'menu.notice': 'Notice Management',
 };

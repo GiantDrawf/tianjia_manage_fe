@@ -4,9 +4,15 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import Routes from './router';
 
-const { NODE_ENV } = process.env;
-// @ts-ignore
-const configs = JSON.parse(decodeURIComponent(process.argv[3]));
+const { NODE_ENV = 'development' } = process.env;
+let configs = {};
+
+try {
+  configs = require(`./configs/${NODE_ENV}/default.json`);
+} catch (err) {
+  console.error('Invalid config file.');
+  configs = {};
+}
 
 export default defineConfig({
   history: { type: 'hash' },
@@ -43,6 +49,6 @@ export default defineConfig({
     basePath: '/',
   },
   define: {
-    'process.CONFIG': configs.default,
+    'process.CONFIG': configs,
   },
 });

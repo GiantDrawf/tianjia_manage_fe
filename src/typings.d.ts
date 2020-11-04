@@ -37,3 +37,5 @@ declare let ga: Function;
 declare let ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: 'site' | undefined;
 
 declare const NODE_ENV: 'development' | 'production' | false;
+
+declare module 'react-copy-to-clipboard';
