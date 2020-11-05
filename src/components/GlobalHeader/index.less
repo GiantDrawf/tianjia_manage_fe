@@ -104,6 +104,10 @@
   margin: 20px auto;
 }
 
+:global(.ant-list-item-action) {
+  margin-left: 0px;
+}
+
 .noticeIndex {
   display: block;
   width: 32px;
@@ -122,4 +126,20 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
+}
+
+.description {
+  font-size: 12px;
+  line-height: @line-height-base;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.datetime {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: @line-height-base;
 }

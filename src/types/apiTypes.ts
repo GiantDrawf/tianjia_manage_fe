@@ -60,6 +60,6 @@ export interface AllNotice extends BaseResponse {
 }
 
 export interface GetNoticeParams {
-  query: { title?: string; content?: string };
+  query: { title?: string; content?: string; msgId?: string };
   pagination: { page: number; pageSize: number };
 }

@@ -3,7 +3,7 @@ import { NoticeItem } from '@/types/apiTypes';
 import { BellOutlined, CommentOutlined } from '@ant-design/icons';
 import { Badge, Button, List, Row, Empty } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { connect, Dispatch } from 'umi';
+import { connect, Dispatch, useLocation, history } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -12,7 +12,7 @@ export interface NoticeIconProps extends Partial<ConnectState> {
   allNotice: NoticeItem[];
 }
 
-const GlobalHeaderRight: React.SFC<NoticeIconProps> = (props) => {
+const GlobalHeaderRight: React.FC<NoticeIconProps> = (props) => {
   const { dispatch, allNotice } = props;
   const [visible, setVisible] = useState(false);
   const count = allNotice.length;
@@ -21,6 +21,14 @@ const GlobalHeaderRight: React.SFC<NoticeIconProps> = (props) => {
     // 获取所有未读信息
     dispatch({ type: 'notice/getAllNotice' });
   }, []);
+
+  const { pathname } = useLocation();
+  const inNoticePage = pathname.indexOf('/notice') >= 0;
+
+  const goToNoticePage = () => {
+    history.push('/notice');
+    setVisible(false);
+  };
 
   const renderNoticeItem = () => {
     return (
@@ -31,7 +39,17 @@ const GlobalHeaderRight: React.SFC<NoticeIconProps> = (props) => {
         }}
         dataSource={allNotice}
         renderItem={(itemNotice: NoticeItem) => (
-          <List.Item actions={[<a>去回复</a>]}>
+          <List.Item
+            actions={
+              inNoticePage
+                ? []
+                : [
+                    <Button onClick={goToNoticePage} type="link">
+                      回复
+                    </Button>,
+                  ]
+            }
+          >
             <List.Item.Meta
               className={styles.meta}
               avatar={
@@ -40,14 +58,23 @@ const GlobalHeaderRight: React.SFC<NoticeIconProps> = (props) => {
                 </span>
               }
               title={itemNotice.title}
-              description={itemNotice.content}
+              description={
+                <div>
+                  <div className={styles.description}>{itemNotice.content}</div>
+                  <div className={styles.datetime}>{itemNotice.createTime}</div>
+                </div>
+              }
             />
           </List.Item>
         )}
         footer={
-          <Row justify="center" style={{ marginBottom: 10 }}>
-            <Button type="primary">查看全部消息</Button>
-          </Row>
+          inNoticePage ? null : (
+            <Row justify="center" style={{ marginBottom: 10 }}>
+              <Button type="primary" onClick={goToNoticePage}>
+                查看全部消息
+              </Button>
+            </Row>
+          )
         }
       />
     );

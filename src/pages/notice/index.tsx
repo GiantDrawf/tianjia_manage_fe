@@ -29,6 +29,7 @@ const Notice: FC<NoticeProps> = (props: NoticeProps) => {
   const [replayModalShow, setReplayModalShow] = useState<boolean>(false);
   const [replayNoticeRecord, setReplayNoticeRecord] = useState<NoticeItem | null>(null);
   const onSearch = useCallback(({ searchParam, pageInfo }: OnSearch) => {
+    console.log(searchParam);
     setQueryParams({
       query: { ...searchParam },
       pagination: {
@@ -106,15 +107,15 @@ const Notice: FC<NoticeProps> = (props: NoticeProps) => {
       ),
     },
     {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-    },
-    {
       title: '回复',
       dataIndex: 'replay',
       key: 'replay',
       render: (replay: string) => replay || '-',
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     },
     {
       title: '回复时间',
@@ -205,7 +206,7 @@ const Notice: FC<NoticeProps> = (props: NoticeProps) => {
         <ReplayModal
           visible={replayModalShow}
           onClose={() => handleReplayModalShow(false)}
-          refreshList={refreshList}
+          refreshList={resetNotices}
           noticeRecord={replayNoticeRecord}
         />
       ) : null}

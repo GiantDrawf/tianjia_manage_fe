@@ -5,10 +5,60 @@ export const roleMap = {
 
 export const noticeSearchFormItems = [
   {
+    name: 'msgId',
+    label: '消息Id',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
     name: 'title',
     label: '标题',
-    span: 5,
+    span: 6,
     renderCom: 'input',
+  },
+  {
+    name: 'content',
+    label: '内容',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
+    name: 'isRead',
+    label: '是否已读',
+    span: 3,
+    renderCom: 'switch',
+    comProps: {
+      checkedChildren: '已读',
+      unCheckedChildren: '未读',
+    },
+    itemProps: {
+      valuePropName: 'checked',
+    },
+  },
+  {
+    name: 'isShow',
+    label: '是否显示',
+    span: 3,
+    renderCom: 'switch',
+    comProps: {
+      checkedChildren: '展示',
+      unCheckedChildren: '隐藏',
+    },
+    itemProps: {
+      valuePropName: 'checked',
+    },
+  },
+  {
+    name: 'createTime',
+    label: '创建时间',
+    span: 8,
+    renderCom: 'rangePicker',
+  },
+  {
+    name: 'replayTime',
+    label: '回复时间',
+    span: 8,
+    renderCom: 'rangePicker',
   },
 ];
 

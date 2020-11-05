@@ -4,8 +4,9 @@ import React, {
   MutableRefObject,
   forwardRef,
   useCallback,
+  ReactNode,
 } from 'react';
-import { Form, Row, Col, Input, Select, DatePicker, TreeSelect } from 'antd';
+import { Form, Row, Col, Input, Select, DatePicker, TreeSelect, Switch } from 'antd';
 import moment from 'moment';
 import { LabeledValue } from 'antd/lib/select';
 import { FieldData } from 'rc-field-form/lib/interface';
@@ -17,6 +18,8 @@ export interface FormItem {
   comProps?: {
     options?: LabeledValue[];
     placeholder?: string;
+    checkedChildren?: string | ReactNode;
+    unCheckedChildren?: string | ReactNode;
     [propsName: string]: any;
   };
   span?: number;
@@ -36,6 +39,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
   ref: MutableRefObject<unknown> | any,
 ) => {
   const [form] = Form.useForm();
+  const { onPressEnter, onFieldsChange, initialValues, items } = props;
 
   useImperativeHandle(ref, () => ({
     resetFields: form.resetFields,
@@ -50,14 +54,14 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
           return (
             <Input
               placeholder={comProps?.placeholder || `请输入${label}`}
-              onPressEnter={props.onPressEnter}
+              onPressEnter={onPressEnter}
             />
           );
         case 'passwordInput':
           return (
             <Input.Password
               placeholder={comProps?.placeholder ?? `请输入${label}`}
-              onPressEnter={props.onPressEnter}
+              onPressEnter={onPressEnter}
             />
           );
         case 'select':
@@ -65,7 +69,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
             <Select
               allowClear
               placeholder={comProps?.placeholder ?? `请选择${label}`}
-              onChange={props.onPressEnter}
+              onChange={onPressEnter}
               showSearch={comProps?.showSearch ?? false}
               filterOption={(comProps?.showSearch && comProps?.filterOption) ?? null}
             >
@@ -95,24 +99,32 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
           );
         case 'treeSelect':
           return <TreeSelect {...comProps} />;
+        case 'switch':
+          return (
+            <Switch
+              checkedChildren={comProps?.checkedChildren}
+              unCheckedChildren={comProps?.unCheckedChildren}
+              onChange={onPressEnter}
+            />
+          );
         default:
           return <Input />;
       }
     },
-    [props.onPressEnter],
+    [onPressEnter],
   );
 
   const handleFieldChange = useCallback(
     (changedFields: FieldData[], allFields: FieldData[]) => {
-      props.onFieldsChange && props.onFieldsChange(changedFields, allFields);
+      onFieldsChange && onFieldsChange(changedFields, allFields);
     },
     [props],
   );
 
   return (
-    <Form form={form} initialValues={props.initialValues} onFieldsChange={handleFieldChange}>
+    <Form form={form} initialValues={initialValues} onFieldsChange={handleFieldChange}>
       <Row gutter={24}>
-        {props.items.map((item: FormItem) => {
+        {items.map((item: FormItem) => {
           return (
             <Col span={item.span ?? 8} key={item.name}>
               <Form.Item name={item.name} label={item.label} {...item.itemProps}>
