@@ -13,4 +13,8 @@ export default {
   'menu.list.table-list': 'Search Table',
   'menu.usermanagement': 'User Management',
   'menu.notice': 'Notice Management',
+  'menu.article': 'Article Management',
+  'menu.article.management': 'Article List',
+  'menu.article.create': 'Create Article',
+  'menu.article.edit': 'Edit Article',
 };

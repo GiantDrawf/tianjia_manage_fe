@@ -63,3 +63,23 @@ export interface GetNoticeParams {
   query: { title?: string; content?: string; msgId?: string };
   pagination: { page: number; pageSize: number };
 }
+
+export interface Thumbnail {
+  url: string;
+  width?: number;
+  height?: number;
+}
+
+export interface Article {
+  aid: string;
+  title: string;
+  content: string;
+  thumbnail?: string;
+  thumbnails?: string[] | Thumbnail[];
+}
+
+export interface UploadApi extends BaseResponse {
+  data: {
+    url: string;
+  };
+}

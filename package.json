@@ -71,7 +71,8 @@
     "swr": "^0.3.8",
     "umi": "^3.2.24",
     "umi-request": "^1.3.5",
-    "use-merge-value": "^1.0.2"
+    "use-merge-value": "^1.0.2",
+    "wangeditor": "^4.2.2"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^1.0.23",

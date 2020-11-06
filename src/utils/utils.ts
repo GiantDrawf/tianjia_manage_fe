@@ -45,3 +45,22 @@ export const checkRedirect = () => {
   }
   history.replace(redirect || '/');
 };
+
+/**
+ * 获取文中所有图片
+ * @param str
+ */
+export const getImgSrcInContent = (str: string): string[] => {
+  if (!str) return [];
+  const imgReg = /<img.*?(?:>|\/>)/gi; // 匹配img标签
+  const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i; // 匹配src
+  return (
+    str
+      .match(imgReg)
+      ?.map((item: string) => {
+        const result = item.match(srcReg);
+        return result ? result[1] : '';
+      })
+      .filter((item: string) => item) || []
+  );
+};
