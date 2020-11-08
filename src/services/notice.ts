@@ -9,7 +9,7 @@ const { apiBasePath } = process['CONFIG'];
  * @param params
  */
 export async function getAllNoReadMsg(): Promise<AllNotice> {
-  return request(`${apiBasePath}/api/platform/msg/getNoReadMsg`);
+  return request(`${apiBasePath}/platform/msg/getNoReadMsg`);
 }
 
 /**
@@ -17,7 +17,7 @@ export async function getAllNoReadMsg(): Promise<AllNotice> {
  * @param params
  */
 export const useNoticeList = (params: GetNoticeParams) => {
-  return useSWR<{ data: AllNotice }>([`${apiBasePath}/api/common/msg/query`, params], {
+  return useSWR<{ data: AllNotice }>([`${apiBasePath}/common/msg/query`, params], {
     fetcher: (url: string) =>
       request(url, {
         method: 'POST',
@@ -34,7 +34,7 @@ export const changeNoticeShow = async (params: {
   msgId: string;
   isShow: boolean;
 }): Promise<BaseResponse> => {
-  return request(`${apiBasePath}/api/platform/msg/changeMsgShow`, { method: 'POST', data: params });
+  return request(`${apiBasePath}/platform/msg/changeMsgShow`, { method: 'POST', data: params });
 };
 
 /**
@@ -42,7 +42,7 @@ export const changeNoticeShow = async (params: {
  * @param params
  */
 export async function readMsg(msgId: string): Promise<BaseResponse> {
-  return request(`${apiBasePath}/api/platform/msg/readMsg?msgId=${msgId}`);
+  return request(`${apiBasePath}/platform/msg/readMsg?msgId=${msgId}`);
 }
 
 /**
@@ -53,5 +53,5 @@ export const replayMsg = async (params: {
   msgId: string;
   replay: string;
 }): Promise<BaseResponse> => {
-  return request(`${apiBasePath}/api/platform/msg/replayMsg`, { method: 'POST', data: params });
+  return request(`${apiBasePath}/platform/msg/replayMsg`, { method: 'POST', data: params });
 };
