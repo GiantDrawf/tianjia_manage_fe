@@ -3,6 +3,11 @@ export const roleMap = {
   guest: { label: '游客', textColor: '#808080' },
 };
 
+export const aTypeMap = {
+  article: { label: '普通文章' },
+  slide: { label: '幻灯' },
+};
+
 export const noticeSearchFormItems = [
   {
     name: 'msgId',
@@ -33,6 +38,7 @@ export const noticeSearchFormItems = [
     },
     itemProps: {
       valuePropName: 'checked',
+      labelCol: { span: 12 },
     },
   },
   {
@@ -46,6 +52,7 @@ export const noticeSearchFormItems = [
     },
     itemProps: {
       valuePropName: 'checked',
+      labelCol: { span: 12 },
     },
   },
   {
@@ -66,13 +73,13 @@ export const userSearchFormItems = [
   {
     name: 'name',
     label: '用户名',
-    span: 5,
+    span: 6,
     renderCom: 'input',
   },
   {
     name: 'role',
     label: '角色',
-    span: 5,
+    span: 6,
     renderCom: 'select',
     comProps: {
       options: Object.keys(roleMap).map((itemKey) => ({
@@ -80,5 +87,77 @@ export const userSearchFormItems = [
         value: itemKey,
       })),
     },
+  },
+];
+
+export const articleSearchFormItems = [
+  {
+    name: 'aid',
+    label: '文章id',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
+    name: 'title',
+    label: '标题',
+    span: 6,
+    renderCom: 'input',
+    comProps: {
+      placeholder: '支持模糊搜索',
+    },
+  },
+  {
+    name: 'summary',
+    label: '描述',
+    span: 6,
+    renderCom: 'input',
+    comProps: {
+      placeholder: '支持模糊搜索',
+    },
+  },
+  {
+    name: 'content',
+    label: '内容',
+    span: 6,
+    renderCom: 'input',
+    comProps: {
+      placeholder: '支持模糊搜索',
+    },
+  },
+  {
+    name: 'type',
+    label: '类型',
+    span: 6,
+    renderCom: 'select',
+    comProps: {
+      options: Object.keys(aTypeMap).map((itemKey) => ({
+        label: aTypeMap[itemKey].label,
+        value: itemKey,
+      })),
+    },
+  },
+  {
+    name: 'creator',
+    label: '创建人',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
+    name: 'updater',
+    label: '更新人',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
+    name: 'createTime',
+    label: '创建时间',
+    span: 8,
+    renderCom: 'rangePicker',
+  },
+  {
+    name: 'updateTime',
+    label: '更新时间',
+    span: 8,
+    renderCom: 'rangePicker',
   },
 ];

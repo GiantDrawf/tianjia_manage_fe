@@ -36,30 +36,15 @@ export default [
             path: '/article',
             icon: 'picture',
             authority: ['admin'],
-            routes: [
-              // 新建文章
-              {
-                name: 'create',
-                path: '/article/create',
-                authority: ['admin'],
-                component: './article/create/',
-              },
-              // 编辑文章(菜单隐藏)
-              {
-                name: 'edit',
-                path: '/article/edit/:aid',
-                authority: ['admin'],
-                hideInMenu: true,
-                component: './article/create/',
-              },
-              // 文章列表管理
-              {
-                name: 'management',
-                path: '/article/management',
-                authority: ['admin'],
-                component: './article/',
-              },
-            ],
+            component: './article/',
+          },
+          // 新建或编辑文章
+          {
+            name: 'editArticle',
+            path: '/article/edit/:aid?',
+            authority: ['admin'],
+            hideInMenu: true,
+            component: './article/create/',
           },
           // 消息管理
           {

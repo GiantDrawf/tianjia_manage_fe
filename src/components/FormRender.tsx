@@ -6,10 +6,23 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { Form, Row, Col, Input, Select, DatePicker, TreeSelect, Switch } from 'antd';
+import {
+  Form,
+  Row,
+  Col,
+  Input,
+  Select,
+  DatePicker,
+  TreeSelect,
+  Switch,
+  Checkbox,
+  Radio,
+} from 'antd';
 import moment from 'moment';
 import { LabeledValue } from 'antd/lib/select';
-import { FieldData } from 'rc-field-form/lib/interface';
+import { FieldData, NamePath, ValidateFields } from 'rc-field-form/lib/interface';
+import { FormLayout } from 'antd/lib/form/Form';
+import Uploader from './Uploader';
 
 export interface FormItem {
   name: string;
@@ -24,14 +37,28 @@ export interface FormItem {
   };
   span?: number;
   itemProps?: {};
+  checkOptions?: { value: string; label: string }[];
+}
+
+export interface FormItemLayout {
+  labelCol: { span: number };
+  wrapperCol: { span: number };
 }
 
 export interface Props {
   ref: MutableRefObject<unknown> | any;
   items: FormItem[];
-  onPressEnter: () => any;
+  formLayout?: FormLayout;
+  formItemLayout?: FormItemLayout;
+  onPressEnter?: () => any;
   initialValues?: { [keyName: string]: any };
   onFieldsChange?: (changedFields: FieldData[], allFields: FieldData[]) => void;
+}
+
+export interface FormRefBindFunc {
+  resetFields: (fields?: NamePath[]) => void;
+  validateFields: ValidateFields;
+  setFields: (fields: FieldData[]) => void;
 }
 
 const FormRender: ForwardRefRenderFunction<unknown, Props> = (
@@ -39,22 +66,40 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
   ref: MutableRefObject<unknown> | any,
 ) => {
   const [form] = Form.useForm();
-  const { onPressEnter, onFieldsChange, initialValues, items } = props;
+  const {
+    formLayout = 'horizontal',
+    formItemLayout = formLayout === 'horizontal'
+      ? { labelCol: { span: 4 }, wrapperCol: { span: 20 } }
+      : {},
+    onPressEnter = () => {},
+    onFieldsChange,
+    initialValues,
+    items,
+  } = props;
 
   useImperativeHandle(ref, () => ({
     resetFields: form.resetFields,
-    getValues: form.validateFields,
+    validateFields: form.validateFields,
     setFields: form.setFields,
   }));
 
   const getChildren = useCallback(
-    ({ renderCom, comProps = {}, label }: FormItem) => {
+    ({ renderCom, comProps = {}, label, name, checkOptions }: FormItem) => {
       switch (renderCom) {
         case 'input':
+        default:
           return (
             <Input
               placeholder={comProps?.placeholder || `请输入${label}`}
               onPressEnter={onPressEnter}
+            />
+          );
+        case 'textArea':
+          return (
+            <Input.TextArea
+              placeholder={comProps?.placeholder || `请输入${label}`}
+              onPressEnter={onPressEnter}
+              {...comProps}
             />
           );
         case 'passwordInput':
@@ -107,8 +152,34 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
               onChange={onPressEnter}
             />
           );
-        default:
-          return <Input />;
+        case 'upload':
+          return (
+            <Uploader
+              {...comProps}
+              accept="image/png,image/jpg"
+              onInvalid={(errString: string) => form.setFields([{ name, errors: [errString] }])}
+            />
+          );
+        case 'checkbox':
+          return (
+            <Checkbox.Group>
+              {checkOptions?.map((item) => (
+                <Checkbox value={item.value} key={item.value}>
+                  {item.label}
+                </Checkbox>
+              ))}
+            </Checkbox.Group>
+          );
+        case 'radio':
+          return (
+            <Radio.Group>
+              {checkOptions?.map((item) => (
+                <Radio value={item.value} key={item.value}>
+                  {item.label}
+                </Radio>
+              ))}
+            </Radio.Group>
+          );
       }
     },
     [onPressEnter],
@@ -122,7 +193,13 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
   );
 
   return (
-    <Form form={form} initialValues={initialValues} onFieldsChange={handleFieldChange}>
+    <Form
+      {...formItemLayout}
+      layout={formLayout}
+      form={form}
+      initialValues={initialValues}
+      onFieldsChange={handleFieldChange}
+    >
       <Row gutter={24}>
         {items.map((item: FormItem) => {
           return (

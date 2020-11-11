@@ -6,14 +6,26 @@
     margin-bottom: 20px;
   }
   .left {
-    min-width: 350px;
+    max-width: 550px;
     margin-right: 10px;
+    .classicInfo {
+      padding: 15px 15px 0px;
+      background-color: #fff;
+    }
+    :global(.ant-form-item) {
+      margin-bottom: 15px;
+    }
+    .moduleInfo {
+      margin-top: 15px;
+      padding: 15px 15px;
+      background-color: #fff;
+    }
   }
   .right {
     flex: 1;
     min-width: 350px;
     min-height: 500px;
-    & .saveBtn {
+    .saveBtn {
       width: 100%;
       margin-top: 14px;
     }

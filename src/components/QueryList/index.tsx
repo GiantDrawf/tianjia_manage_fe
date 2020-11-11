@@ -43,7 +43,7 @@ const QueryList: FC<Props> = (props: Props) => {
 
   const search = async () => {
     try {
-      searchParam.current = await formRef.current?.getValues();
+      searchParam.current = await formRef.current?.validateFields();
       setPageInfo((prevState: PageInfo) => ({ ...prevState, pageNo: 1 }));
     } catch (error) {
       console.error(error);

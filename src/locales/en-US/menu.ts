@@ -14,7 +14,5 @@ export default {
   'menu.usermanagement': 'User Management',
   'menu.notice': 'Notice Management',
   'menu.article': 'Article Management',
-  'menu.article.management': 'Article List',
-  'menu.article.create': 'Create Article',
-  'menu.article.edit': 'Edit Article',
+  'menu.editArticle': 'Edit Article',
 };

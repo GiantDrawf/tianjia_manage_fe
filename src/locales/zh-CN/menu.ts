@@ -14,7 +14,5 @@ export default {
   'menu.usermanagement': '用户管理',
   'menu.notice': '消息管理',
   'menu.article': '文章管理',
-  'menu.article.management': '全部文章',
-  'menu.article.create': '新建文章',
-  'menu.article.edit': '编辑文章',
+  'menu.editArticle': '编辑文章',
 };

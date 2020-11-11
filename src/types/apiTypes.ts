@@ -3,6 +3,7 @@ export interface BaseResponse {
   status: string;
   msg: string;
   data: any;
+  err?: any;
 }
 
 export interface AccountInfo extends BaseResponse {
@@ -71,15 +72,40 @@ export interface Thumbnail {
 }
 
 export interface Article {
-  aid: string;
+  aid?: string;
   title: string;
-  content: string;
+  summary?: string;
+  type: string;
   thumbnail?: string;
   thumbnails?: string[] | Thumbnail[];
+  content: string;
 }
 
 export interface UploadApi extends BaseResponse {
   data: {
     url: string;
   };
+}
+
+export interface AllArticle extends BaseResponse {
+  data: Article[];
+}
+
+export interface GetArticleParams {
+  query: {
+    aid?: string;
+    title?: string;
+    content?: string;
+    summary?: string;
+    type?: string;
+    creator?: string;
+    updater?: string;
+    createTime?: string[];
+    updateTime?: string[];
+  };
+  pagination: { page: number; pageSize: number };
+}
+
+export interface ArticleDetail extends BaseResponse {
+  data: Article;
 }

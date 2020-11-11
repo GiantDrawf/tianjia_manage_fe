@@ -29,7 +29,6 @@ const Notice: FC<NoticeProps> = (props: NoticeProps) => {
   const [replayModalShow, setReplayModalShow] = useState<boolean>(false);
   const [replayNoticeRecord, setReplayNoticeRecord] = useState<NoticeItem | null>(null);
   const onSearch = useCallback(({ searchParam, pageInfo }: OnSearch) => {
-    console.log(searchParam);
     setQueryParams({
       query: { ...searchParam },
       pagination: {

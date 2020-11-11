@@ -17,5 +17,7 @@ module.exports = {
     'no-return-await': 0,
     'no-param-reassign': 0,
     'global-require': 0,
+    'no-nested-ternary': 0,
+    'func-names': 0,
   },
 };
