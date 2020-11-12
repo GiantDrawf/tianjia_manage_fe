@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button, message } from 'antd';
-import { useParams } from 'umi';
+import { useParams, history } from 'umi';
 import EditorBlock from '@/components/EditorBlock';
 import { Article } from '@/types/apiTypes';
 import FormRender, { FormRefBindFunc } from '@/components/FormRender';
@@ -43,6 +43,7 @@ export default function CreateArticle() {
       .then((res) => {
         if (res && res.code === 200) {
           message.success('保存成功，两秒后自动返回列表');
+          setTimeout(() => history.push('/article'), 2000);
         } else {
           message.error(res.msg || '保存失败');
         }

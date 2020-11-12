@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import QueryList, { OnSearch } from '@/components/QueryList';
 import { articleSearchFormItems, aTypeMap } from '@/utils/const';
-import { useArticleList } from '@/services/article';
+import { deleteArticle, useArticleList } from '@/services/article';
 import { Article, GetArticleParams } from '@/types/apiTypes';
-import { Button, message, Table } from 'antd';
+import { Button, message, Popconfirm, Table } from 'antd';
 import { history, Link } from 'umi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { CopyOutlined } from '@ant-design/icons';
+import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 
 /**
  * 文章管理
@@ -28,9 +28,26 @@ export default function ArticleList() {
       },
     });
   }, []);
-  const { isValidating: loading, data: listData } = useArticleList(queryParams);
+
+  const { isValidating: loading, data: listData, mutate: refreshList } = useArticleList(
+    queryParams,
+  );
   const dataSource = listData?.data?.list || [];
   const total = listData?.data?.pagination?.total || 0;
+  const handleDeleteArticle = (aid: string) => {
+    if (aid) {
+      deleteArticle(aid)
+        .then((res) => {
+          if (res && res.code === 200) {
+            message.success(res.msg || '删除成功');
+          } else {
+            message.error(res.msg || '删除失败，请联系系统管理员');
+          }
+        })
+        .catch((err) => message.error(err))
+        .finally(() => refreshList());
+    }
+  };
   const articleColumns = [
     {
       title: 'Id',
@@ -81,6 +98,21 @@ export default function ArticleList() {
       title: '更新时间',
       dataIndex: 'updateTime',
       key: 'updateTime',
+    },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      key: 'action',
+      render: (_: any, record: Article) => (
+        <Popconfirm
+          title="确认删除该文章吗"
+          okText="确认"
+          cancelText="取消"
+          onConfirm={() => handleDeleteArticle(record.aid)}
+        >
+          <DeleteOutlined />
+        </Popconfirm>
+      ),
     },
   ];
 

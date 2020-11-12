@@ -72,12 +72,12 @@ export interface Thumbnail {
 }
 
 export interface Article {
-  aid?: string;
+  aid: string;
   title: string;
-  summary?: string;
+  summary: string;
   type: string;
-  thumbnail?: string;
-  thumbnails?: string[] | Thumbnail[];
+  thumbnail: string;
+  thumbnails: string[] | Thumbnail[];
   content: string;
 }
 
