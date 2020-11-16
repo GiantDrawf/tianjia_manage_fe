@@ -206,8 +206,8 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
             span: item.span ?? 8,
             xs: 24,
             sm: 24,
-            md: 12,
-            lg: 8,
+            md: item.span && item.span > 12 ? item.span : 12,
+            lg: item.span && item.span > 8 ? item.span : 8,
             xl: item.span ?? 6,
             xxl: item.span ?? 6,
           };
