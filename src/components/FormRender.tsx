@@ -202,8 +202,18 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
     >
       <Row gutter={24}>
         {items.map((item: FormItem) => {
+          const ColLayout = {
+            span: item.span ?? 8,
+            xs: 24,
+            sm: 24,
+            md: 12,
+            lg: 8,
+            xl: item.span ?? 6,
+            xxl: item.span ?? 6,
+          };
+
           return (
-            <Col span={item.span ?? 8} key={item.name}>
+            <Col {...ColLayout} key={item.name}>
               <Form.Item name={item.name} label={item.label} {...item.itemProps}>
                 {getChildren(item)}
               </Form.Item>

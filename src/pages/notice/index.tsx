@@ -127,7 +127,7 @@ const Notice: FC<NoticeProps> = (props: NoticeProps) => {
       dataIndex: 'action',
       key: 'action',
       render: (_: any, record: NoticeItem) => (
-        <Row align="middle">
+        <Row align="middle" style={{ minWidth: 100 }}>
           <Tooltip title="编辑回复">
             <EditOutlined
               onClick={(e) => {
