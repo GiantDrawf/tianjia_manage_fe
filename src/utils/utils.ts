@@ -50,7 +50,7 @@ export const checkRedirect = () => {
  * 获取文中所有图片
  * @param str
  */
-export const getImgSrcInContent = (str: string): string[] => {
+export const getImgSrcInContent = (str: string, filterUnLocalImg?: boolean): string[] => {
   if (!str) return [];
   const imgReg = /<img.*?(?:>|\/>)/gi; // 匹配img标签
   const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i; // 匹配src
@@ -61,6 +61,17 @@ export const getImgSrcInContent = (str: string): string[] => {
         const result = item.match(srcReg);
         return result ? result[1] : '';
       })
-      .filter((item: string) => item) || []
+      .filter((item: string) => item)
+      .filter((item) => {
+        if (filterUnLocalImg) {
+          return (
+            item.indexOf(
+              process.env.NODE_ENV === 'development' ? 'localhost:8080/' : 'tianjia.live/static',
+            ) < 0
+          );
+        }
+
+        return true;
+      }) || []
   );
 };

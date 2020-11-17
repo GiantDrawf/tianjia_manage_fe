@@ -52,7 +52,7 @@
     "@ant-design/pro-layout": "^6.5.14",
     "@ant-design/pro-table": "^2.10.1",
     "@umijs/route-utils": "^1.0.34",
-    "antd": "^4.8.3",
+    "antd": "^4.8.4",
     "classnames": "^2.2.6",
     "commitizen": "^4.2.2",
     "cz-emoji": "^1.3.1",
@@ -72,7 +72,7 @@
     "umi": "^3.2.27",
     "umi-request": "^1.3.5",
     "use-merge-value": "^1.0.2",
-    "wangeditor": "^4.3.0"
+    "wangeditor": "^4.4.0"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^1.0.23",
@@ -105,7 +105,7 @@
     "mockjs": "^1.1.0",
     "prettier": "^2.1.2",
     "pro-download": "1.0.1",
-    "puppeteer-core": "^5.4.1",
+    "puppeteer-core": "^5.5.0",
     "stylelint": "^13.7.2",
     "typescript": "^4.0.5"
   },

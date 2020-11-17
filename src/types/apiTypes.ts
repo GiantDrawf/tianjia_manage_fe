@@ -109,3 +109,9 @@ export interface GetArticleParams {
 export interface ArticleDetail extends BaseResponse {
   data: Article;
 }
+
+export interface LocalizationImgRes extends BaseResponse {
+  data: {
+    [key: string]: string;
+  };
+}
