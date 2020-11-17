@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button, message } from 'antd';
 import { useParams, history } from 'umi';
-import EditorBlock from '@/components/EditorBlock';
+import EditorBlock from '@/components/EditorBlock/asyncEditor';
 import { Article } from '@/types/apiTypes';
 import FormRender, { FormRefBindFunc } from '@/components/FormRender';
 import { createArticle, getArticleDetail, updateActicle } from '@/services/article';

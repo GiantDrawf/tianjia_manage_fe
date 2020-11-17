@@ -19,5 +19,7 @@ module.exports = {
     'global-require': 0,
     'no-nested-ternary': 0,
     'func-names': 0,
+    'object-shorthand': 0,
+    'react/sort-comp': 0,
   },
 };

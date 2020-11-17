@@ -6,7 +6,7 @@ import { Article } from '@/types/apiTypes';
 import { getImgSrcInContent } from '@/utils/utils';
 import styles from './index.less';
 
-interface Props {
+export interface Props {
   article?: Article;
   handleContentChange?: (newHtml: string) => void;
 }
