@@ -9,6 +9,7 @@ import styles from './index.less';
 
 export interface GlobalHeaderRightProps extends Partial<ConnectProps> {
   username: String;
+  username_zh: String;
   menu?: boolean;
 }
 
@@ -37,7 +38,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
   };
 
   render(): React.ReactNode {
-    const { username, menu } = this.props;
+    const { username, username_zh, menu } = this.props;
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
         {menu && (
@@ -63,7 +64,9 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
           <Avatar size="small" className={styles.avatar} src={HeadImg} alt="avatar" />
-          <span className={`${styles.name} anticon`}>{username}</span>
+          <span className={`${styles.name} anticon`}>
+            {username_zh || username || '系统管理员'}
+          </span>
         </span>
       </HeaderDropdown>
     ) : (
@@ -82,4 +85,5 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
 
 export default connect(({ login }: ConnectState) => ({
   username: login.name,
+  username_zh: login.name_zh,
 }))(AvatarDropdown);

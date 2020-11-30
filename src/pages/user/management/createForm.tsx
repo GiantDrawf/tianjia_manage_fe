@@ -38,6 +38,7 @@ const CreateForm: FC<Props> = (props: Props) => {
       const fieldValues = await form.validateFields();
       const submitParams = {
         name: fieldValues.name,
+        name_zh: fieldValues.name_zh,
         password: fieldValues.password,
         role: fieldValues.role,
       };
@@ -93,6 +94,14 @@ const CreateForm: FC<Props> = (props: Props) => {
             autoComplete="off"
             onBlur={checkUserName}
           />
+        </FormItem>
+        <FormItem
+          label="中文名称"
+          name="name_zh"
+          hasFeedback
+          rules={[{ max: 15, message: '中文名称不能超过15个字' }]}
+        >
+          <Input placeholder="请输入中文名称(选填)" allowClear autoComplete="off" />
         </FormItem>
         {isNew || (!isNew && needChangePWD) ? (
           <Fragment>

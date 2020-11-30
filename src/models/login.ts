@@ -12,6 +12,7 @@ const { tokenKey } = process['CONFIG'];
 export interface StateType {
   status?: 'ok' | 'error';
   name: string;
+  name_zh: string;
   currentAuthority?: 'user' | 'guest' | 'admin';
 }
 
@@ -33,6 +34,7 @@ const Model: LoginModelType = {
 
   state: {
     name: '',
+    name_zh: '',
   },
 
   effects: {
@@ -90,12 +92,14 @@ const Model: LoginModelType = {
     changeLoginStatus(state, { payload }) {
       const role = payload?.data?.role || 'guest';
       const name = payload?.data?.name || '';
+      const name_zh = payload?.data?.name_zh || '';
       const status = payload?.code === 200 ? 'ok' : 'error';
       setAuthority(role);
       return {
         ...state,
         status,
         name,
+        name_zh,
         currentAuthority: role,
       };
     },

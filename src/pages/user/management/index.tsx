@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useCallback } from 'react';
+import { connect } from 'umi';
 import { Button, Divider, message, Popconfirm, Row, Table } from 'antd';
 import { deleteUser, useUserList } from '@/services/user';
 import { GetUserListParams, UserItem } from '@/types/apiTypes';
@@ -7,11 +8,13 @@ import { roleMap, userSearchFormItems } from '@/utils/const';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import QueryList, { OnSearch } from '@/components/QueryList';
 import CreateForm from './createForm';
+import { ConnectState } from '@/models/connect';
 
 /**
  * 用户管理页面
  */
-export default function UserManagement() {
+function UserManagement(props: { username: string }) {
+  const { username } = props;
   const [createModalVisible, setCreateModalVisible] = useState<boolean>(false);
   const [userItemRecord, setUserItemRecord] = useState<UserItem | {}>({});
   const [queryParams, setQueryParams] = useState<GetUserListParams>({
@@ -55,6 +58,11 @@ export default function UserManagement() {
       key: 'name',
     },
     {
+      title: '中文名',
+      dataIndex: 'name_zh',
+      key: 'name_zh',
+    },
+    {
       title: '用户权限',
       dataIndex: 'role',
       key: 'role',
@@ -72,15 +80,19 @@ export default function UserManagement() {
       render: (_: any, record: UserItem) => (
         <Row>
           <EditOutlined onClick={() => handleUserChange(record)} />
-          <Divider type="vertical" />
-          <Popconfirm
-            title="确认删除该用户?"
-            onConfirm={() => handleDelete(record)}
-            okText="确认删除"
-            cancelText="取消"
-          >
-            <DeleteOutlined />
-          </Popconfirm>
+          {record.name !== username ? (
+            <Fragment>
+              <Divider type="vertical" />
+              <Popconfirm
+                title="确认删除该用户?"
+                onConfirm={() => handleDelete(record)}
+                okText="确认删除"
+                cancelText="取消"
+              >
+                <DeleteOutlined />
+              </Popconfirm>
+            </Fragment>
+          ) : null}
         </Row>
       ),
     },
@@ -124,3 +136,7 @@ export default function UserManagement() {
     </Fragment>
   );
 }
+
+export default connect(({ login }: ConnectState) => ({
+  username: login.name,
+}))(UserManagement);
