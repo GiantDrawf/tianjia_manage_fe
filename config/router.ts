@@ -46,6 +46,22 @@ export default [
             hideInMenu: true,
             component: './article/create/',
           },
+          // 模块管理
+          {
+            name: 'module',
+            path: '/module',
+            icon: 'picture',
+            authority: ['admin'],
+            component: './module/',
+          },
+          // 新建或编辑模块
+          {
+            name: 'editModule',
+            path: '/module/edit/:mid?',
+            authority: ['admin'],
+            hideInMenu: true,
+            component: './module/create',
+          },
           // 消息管理
           {
             name: 'notice',

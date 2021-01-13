@@ -81,6 +81,11 @@ export interface Article {
   content: string;
 }
 
+export interface ImportArticle extends Article {
+  importedBy: string;
+  importTime: string;
+}
+
 export interface UploadApi extends BaseResponse {
   data: {
     url: string;
@@ -114,4 +119,33 @@ export interface LocalizationImgRes extends BaseResponse {
   data: {
     [key: string]: string;
   };
+}
+
+export interface GetModuleParams {
+  query: {
+    mid?: string;
+  };
+  pagination: { page: number; pageSize: number };
+}
+
+export interface CreateModuleTypes {
+  mid?: string;
+  moduleName: string;
+  moduleDesc: string;
+  moduleContent: Article[];
+}
+export interface ModuleTypes extends CreateModuleTypes {
+  mid: string;
+  creator: string;
+  createTime: string;
+  updater: string;
+  updateTime: string;
+}
+
+export interface AllModule extends BaseResponse {
+  data: ModuleTypes[];
+}
+
+export interface ModuleDetail extends BaseResponse {
+  data: ModuleTypes;
 }

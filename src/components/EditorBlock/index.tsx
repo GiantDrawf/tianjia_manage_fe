@@ -167,8 +167,6 @@ export default class Editor extends Component<Props, StateTypes> {
   render() {
     const { editorLoading } = this.state;
 
-    console.log(editorLoading);
-
     return (
       <Spin spinning={editorLoading} tip="加载中，请稍后...">
         <div id="content-editor" />

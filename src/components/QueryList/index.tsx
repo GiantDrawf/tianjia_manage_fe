@@ -2,7 +2,7 @@ import React, { FC, useRef, useState, ReactElement, CSSProperties, MutableRefObj
 import { Button } from 'antd';
 import { useUpdateEffect } from 'react-use';
 import { FieldData } from 'rc-field-form/lib/interface';
-import FormRender, { FormItem } from '../FormRender';
+import FormRender, { FormItem, FormItemLayout } from '../FormRender';
 import Pagination from '../Pagination';
 import styles from './index.less';
 
@@ -19,6 +19,7 @@ export interface Props {
   actionsStyle?: CSSProperties;
   formRef?: MutableRefObject<any>;
   onFieldsChange?: (changedFields: FieldData[], allFields: FieldData[]) => void;
+  formItemLayout?: FormItemLayout;
 }
 
 const QueryList: FC<Props> = (props: Props) => {
@@ -31,11 +32,12 @@ const QueryList: FC<Props> = (props: Props) => {
     initialValues = {},
     actionsStyle = {},
     onFieldsChange,
+    formItemLayout,
   } = props;
   const { pageNo: defaultPageNo, pageSize: defaultPageSize, ...defaultValues } = initialValues;
   const [pageInfo, setPageInfo] = useState<PageInfo>({
     pageNo: defaultPageNo || 1,
-    pageSize: defaultPageSize || 20,
+    pageSize: defaultPageSize || 10,
   });
   const searchParam = useRef(defaultValues);
   const defaultRef = useRef<any>(null);
@@ -65,6 +67,7 @@ const QueryList: FC<Props> = (props: Props) => {
       <div className={styles.header}>
         <FormRender
           ref={formRef}
+          formItemLayout={formItemLayout}
           items={formItem}
           onPressEnter={search}
           initialValues={defaultValues}

@@ -2,7 +2,7 @@ import { ConnectState } from '@/models/connect';
 import { NoticeItem } from '@/types/apiTypes';
 import { BellOutlined, CommentOutlined } from '@ant-design/icons';
 import { Badge, Button, List, Row, Empty } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect, Dispatch, useLocation, history } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
@@ -16,10 +16,19 @@ const GlobalHeaderRight: React.FC<NoticeIconProps> = (props) => {
   const { dispatch, allNotice } = props;
   const [visible, setVisible] = useState(false);
   const count = allNotice.length;
+  const refreshNoticeTimer = useRef<any>(null);
 
   useEffect(() => {
     // 获取所有未读信息
     dispatch({ type: 'notice/getAllNotice' });
+    // 每30s刷新一次
+    refreshNoticeTimer.current = setInterval(() => {
+      dispatch({ type: 'notice/getAllNotice' });
+    }, 30 * 1000);
+
+    return () => {
+      clearInterval(refreshNoticeTimer.current);
+    };
   }, []);
 
   const { pathname } = useLocation();

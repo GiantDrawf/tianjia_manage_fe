@@ -41,8 +41,8 @@ export interface FormItem {
 }
 
 export interface FormItemLayout {
-  labelCol: { span: number };
-  wrapperCol: { span: number };
+  labelCol?: { span?: number; offset?: number };
+  wrapperCol?: { span?: number; offset?: number };
 }
 
 export interface Props {
@@ -92,6 +92,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
             <Input
               placeholder={comProps?.placeholder || `请输入${label}`}
               onPressEnter={onPressEnter}
+              {...comProps}
             />
           );
         case 'textArea':

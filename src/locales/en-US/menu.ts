@@ -15,4 +15,6 @@ export default {
   'menu.notice': 'Notice Management',
   'menu.article': 'Article Management',
   'menu.editArticle': 'Edit Article',
+  'menu.module': 'Module Management',
+  'menu.editModule': 'Edit Module',
 };

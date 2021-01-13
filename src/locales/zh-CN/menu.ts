@@ -15,4 +15,6 @@ export default {
   'menu.notice': '消息管理',
   'menu.article': '文章管理',
   'menu.editArticle': '编辑文章',
+  'menu.module': '模块管理',
+  'menu.editModule': '编辑模块',
 };

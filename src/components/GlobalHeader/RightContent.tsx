@@ -1,6 +1,6 @@
 import { Settings as ProSettings } from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
-import { connect, ConnectProps, SelectLang, Dispatch, Link, useLocation } from 'umi';
+import React from 'react';
+import { connect, ConnectProps, SelectLang, Link, useLocation } from 'umi';
 import { ConnectState } from '@/models/connect';
 import { EditOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
@@ -10,17 +10,11 @@ import Notice from './Notice';
 
 export interface GlobalHeaderRightProps extends Partial<ConnectProps>, Partial<ProSettings> {
   theme?: ProSettings['navTheme'] | 'realDark';
-  dispatch: Dispatch;
 }
 
 const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = (props) => {
-  const { theme, layout, dispatch } = props;
+  const { theme, layout } = props;
   let className = styles.right;
-
-  useEffect(() => {
-    // 获取所有
-    dispatch({ type: 'notice/getAllNotice' });
-  }, []);
 
   const { pathname } = useLocation();
   const inEditArticlePage = pathname.indexOf('/article/edit') >= 0;

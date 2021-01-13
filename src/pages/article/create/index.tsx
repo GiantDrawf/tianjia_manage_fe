@@ -6,6 +6,7 @@ import { Article } from '@/types/apiTypes';
 import FormRender, { FormRefBindFunc } from '@/components/FormRender';
 import { createArticle, getArticleDetail, updateActicle } from '@/services/article';
 import styles from './index.less';
+import { aidFormItem, articleFormItems } from '@/utils/const';
 
 /**
  * 新建文章页面
@@ -15,6 +16,7 @@ export default function CreateArticle() {
   const [article, setArticle] = useState<Article | any>();
   const [latestContent, setLatestContent] = useState<string>('');
   const formRef = useRef<FormRefBindFunc>(null);
+  const autoReturnTimer = useRef<any>(null);
 
   function handleSaveOrUpdate() {
     formRef.current
@@ -43,7 +45,12 @@ export default function CreateArticle() {
       .then((res) => {
         if (res && res.code === 200) {
           message.success('保存成功，两秒后自动返回列表');
-          setTimeout(() => history.push('/article'), 2000);
+          if (autoReturnTimer.current) {
+            clearTimeout(autoReturnTimer.current);
+          }
+          autoReturnTimer.current = setTimeout(() => {
+            history.push('/article');
+          }, 2000);
         } else {
           message.error(res.msg || '保存失败');
         }
@@ -54,78 +61,6 @@ export default function CreateArticle() {
   function handleContentChange(newHtml: string) {
     setLatestContent(newHtml);
   }
-
-  const articleFormItems = [
-    {
-      name: 'title',
-      label: '标题',
-      renderCom: 'input',
-      span: 24,
-      itemProps: {
-        rules: [{ required: true, message: '请填写标题' }],
-      },
-    },
-    {
-      name: 'summary',
-      label: '摘要',
-      renderCom: 'textArea',
-      span: 24,
-    },
-    {
-      name: 'type',
-      label: '类型',
-      renderCom: 'radio',
-      span: 24,
-      checkOptions: [
-        { label: '普通文章', value: 'article' },
-        { label: '幻灯', value: 'slide' },
-      ],
-      itemProps: {
-        rules: [{ required: true, message: '请选择类型' }],
-      },
-    },
-    {
-      name: 'thumbnail',
-      label: '封面图',
-      renderCom: 'upload',
-      span: 24,
-      comProps: {
-        num: 1,
-        maxSize: 200 * 1000,
-      },
-      itemProps: {
-        valuePropName: 'initFileList',
-        extra:
-          '仅可设置一张，用于微信分享展示(如未设置将尝试从图片中获取第一张)，格式png/jpg, 大小200KB以内',
-      },
-    },
-    {
-      name: 'thumbnails',
-      label: '图片',
-      renderCom: 'upload',
-      span: 24,
-      comProps: {
-        num: 0,
-        maxSize: 200 * 1000,
-        listType: 'picture',
-      },
-      itemProps: {
-        valuePropName: 'initFileList',
-        extra: '张数不限，格式png/jpg, 大小200KB以内',
-      },
-    },
-  ];
-  const aidFormItem = [
-    {
-      name: 'aid',
-      label: 'aid',
-      renderCom: 'input',
-      span: 24,
-      itemProps: {
-        hidden: true,
-      },
-    },
-  ];
 
   useEffect(() => {
     if (aid) {
@@ -141,6 +76,13 @@ export default function CreateArticle() {
         }
       });
     }
+
+    return () => {
+      // 清楚定时器
+      if (autoReturnTimer.current) {
+        clearTimeout(autoReturnTimer.current);
+      }
+    };
   }, [aid]);
 
   return (
