@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, Dispatch, SetStateAction } from 'react';
+import React, { useCallback } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Table } from 'antd';
-import { DndProvider, useDrag, useDrop, createDndContext } from 'react-dnd';
+import type { TableProps } from 'antd';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
-import { Article } from '@/types/apiTypes';
-
-const RNDContext = createDndContext(HTML5Backend);
+import type { Article } from '@/types/apiTypes';
 
 const type = 'DragableBodyRow';
 
@@ -49,7 +49,7 @@ interface DragSortingTableProps {
   tableColumns: any[];
   dataSource: Article[];
   setDataSource: Dispatch<SetStateAction<Article[]>>;
-  tableProps: { [key: string]: any };
+  tableProps: TableProps<Article>;
 }
 
 export default function DragSortingTable(props: DragSortingTableProps) {
@@ -73,13 +73,11 @@ export default function DragSortingTable(props: DragSortingTableProps) {
         }),
       );
     },
-    [dataSource],
+    [dataSource, setDataSource],
   );
 
-  const manager = useRef(RNDContext);
-
   return (
-    <DndProvider manager={manager.current.dragDropManager as any}>
+    <DndProvider backend={HTML5Backend}>
       <Table
         {...tableProps}
         columns={tableColumns}

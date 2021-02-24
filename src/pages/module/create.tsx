@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect, Fragment, useCallback } from 'react
 import { Button, message, Popconfirm, Row } from 'antd';
 import { useParams, Link, history } from 'umi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Article, CreateModuleTypes, ImportArticle } from '@/types/apiTypes';
-import FormRender, { FormRefBindFunc } from '@/components/FormRender';
+import type { Article, CreateModuleTypes, ImportArticle } from '@/types/apiTypes';
+import FormRender from '@/components/FormRender';
+import type { FormRefBindFunc } from '@/components/FormRender';
 import { aTypeMap, midFormItem, moduleFormItems } from '@/utils/const';
 import { createModule, getModuleDetail, updateModule } from '@/services/module';
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -48,35 +49,32 @@ export default function CreateModule() {
     [contentList],
   );
 
-  const handleImportArticle = useCallback(
-    (newArticles: Article[]) => {
-      setContentList((prevList: Article[]) => {
-        const notRepeatArticles = newArticles.filter((newArticle) => {
-          let notRepeat = true;
+  const handleImportArticle = useCallback((newArticles: Article[]) => {
+    setContentList((prevList: Article[]) => {
+      const notRepeatArticles = newArticles.filter((newArticle) => {
+        let notRepeat = true;
 
-          prevList.forEach((oldArticle) => {
-            if (oldArticle.aid === newArticle.aid) {
-              notRepeat = false;
-            }
-          });
-
-          return notRepeat;
+        prevList.forEach((oldArticle) => {
+          if (oldArticle.aid === newArticle.aid) {
+            notRepeat = false;
+          }
         });
 
-        if (notRepeatArticles.length === 0) {
-          message.error('请勿重复导入文章!');
-          return prevList;
-        }
-
-        message.success(
-          `文章 ${notRepeatArticles.map((item) => `《${item.title}》`).join('、')} 导入成功`,
-        );
-
-        return [...prevList, ...notRepeatArticles];
+        return notRepeat;
       });
-    },
-    [contentList],
-  );
+
+      if (notRepeatArticles.length === 0) {
+        message.error('请勿重复导入文章!');
+        return prevList;
+      }
+
+      message.success(
+        `文章 ${notRepeatArticles.map((item) => `《${item.title}》`).join('、')} 导入成功`,
+      );
+
+      return [...prevList, ...notRepeatArticles];
+    });
+  }, []);
 
   const handleSaveOrUpdateModule = useCallback(() => {
     formRef.current
