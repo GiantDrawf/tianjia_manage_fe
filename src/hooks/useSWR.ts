@@ -1,5 +1,6 @@
 import { useRef } from 'react';
-import useOldSWR, { ConfigInterface } from 'swr';
+import useOldSWR from 'swr';
+import type { ConfigInterface } from 'swr';
 import request from '@/utils/request';
 
 const defaultOption = {

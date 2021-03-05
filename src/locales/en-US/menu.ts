@@ -12,6 +12,7 @@ export default {
   'menu.home': 'Home',
   'menu.list.table-list': 'Search Table',
   'menu.usermanagement': 'User Management',
+  'menu.checkinmanagement': 'CheckIn Management',
   'menu.notice': 'Notice Management',
   'menu.article': 'Article Management',
   'menu.editArticle': 'Edit Article',

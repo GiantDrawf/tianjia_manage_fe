@@ -21,5 +21,6 @@ module.exports = {
     'func-names': 0,
     'object-shorthand': 0,
     'react/sort-comp': 0,
+    '@typescript-eslint/consistent-type-imports': 0,
   },
 };

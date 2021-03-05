@@ -320,3 +320,18 @@ export const moduleFormItems = [
     span: 24,
   },
 ];
+
+export const checkInSearchFormItems = [
+  {
+    name: 'name',
+    label: '姓名',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
+    name: 'telephone',
+    label: '手机号',
+    span: 6,
+    renderCom: 'input',
+  },
+];

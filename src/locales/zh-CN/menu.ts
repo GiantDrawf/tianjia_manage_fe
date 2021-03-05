@@ -12,6 +12,7 @@ export default {
   'menu.home': '首页',
   'menu.list.table-list': '查询表格',
   'menu.usermanagement': '用户管理',
+  'menu.checkinmanagement': '登记管理',
   'menu.notice': '消息管理',
   'menu.article': '文章管理',
   'menu.editArticle': '编辑文章',

@@ -78,6 +78,14 @@ export default [
             authority: ['admin'],
             component: './user/management',
           },
+          // 登记管理
+          {
+            name: 'checkinmanagement',
+            path: '/checkinmanagement',
+            icon: 'check-square',
+            authority: ['admin'],
+            component: './checkIn',
+          },
           {
             component: './404',
           },

@@ -149,3 +149,26 @@ export interface AllModule extends BaseResponse {
 export interface ModuleDetail extends BaseResponse {
   data: ModuleTypes;
 }
+
+export interface GetCheckInListParams {
+  query: {
+    name?: string;
+    telephone?: string;
+  };
+  pagination: { page: number; pageSize: number };
+}
+
+export interface CheckInItem {
+  _id: string;
+  name: string;
+  telephone: string;
+  numOfPeople: number;
+  blessing: string;
+  createTime: string;
+}
+export interface CheckInList extends BaseResponse {
+  data: {
+    list: CheckInItem[];
+    pagination: Pagination;
+  };
+}
