@@ -170,7 +170,7 @@ export default function CreateModule() {
         </Button>
       </Row>
       <DragSortingTable
-        tableProps={{ locale: { emptyText: '暂无内容' }, rowKey: 'aid' }}
+        tableProps={{ locale: { emptyText: '暂无内容' }, rowKey: 'aid', pagination: false }}
         tableColumns={contentColumns}
         dataSource={contentList}
         setDataSource={setContentList}
