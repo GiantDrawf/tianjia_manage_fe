@@ -172,3 +172,14 @@ export interface CheckInList extends BaseResponse {
     pagination: Pagination;
   };
 }
+
+export interface PerformanceTypes extends BaseResponse {
+  data: {
+    cpuCount: number;
+    cpuUsed: number;
+    driveUsed: number;
+    driveTotal: number;
+    memUsed: number;
+    memTotal: number;
+  };
+}
