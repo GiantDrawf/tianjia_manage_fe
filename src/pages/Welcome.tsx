@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2020-10-12 09:57:09
  * @LastEditors: zhujian
- * @LastEditTime: 2021-03-16 10:40:22
+ * @LastEditTime: 2021-03-16 10:52:06
  * @Description: 你 kin 你擦
  */
 import React from 'react';
@@ -13,7 +13,7 @@ import { usePerformance } from '@/services/os';
 import { Gauge, Liquid } from '@ant-design/charts';
 
 export default (): React.ReactNode => {
-  const { data: performance, isValidating: loading } = usePerformance();
+  const { data: performance } = usePerformance();
 
   const performanceInfo = performance?.data || {};
   const cpuUsedConfig = {
