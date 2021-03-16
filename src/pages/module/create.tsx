@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Fragment, useCallback } from 'react';
+import { useState, useRef, useEffect, Fragment, useCallback } from 'react';
 import { Button, message, Popconfirm, Row } from 'antd';
 import { useParams, Link, history } from 'umi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -105,6 +105,12 @@ export default function CreateModule() {
 
   const contentColumns = [
     {
+      title: '序号',
+      dataIndex: 'order',
+      key: 'order',
+      render: (_: any, record: any, index: number) => index + 1,
+    },
+    {
       title: '文章Id',
       dataIndex: 'aid',
       key: 'aid',
@@ -135,6 +141,16 @@ export default function CreateModule() {
       dataIndex: 'type',
       key: 'type',
       render: (type: string) => aTypeMap[type]?.label || '未知类型',
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+    },
+    {
+      title: '创建人',
+      dataIndex: 'creator',
+      key: 'creator',
     },
     {
       title: '操作',
