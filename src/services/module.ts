@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-30 17:03:22
- * @LastEditTime: 2021-01-13 16:49:27
+ * @LastEditTime: 2021-04-13 15:33:21
  * @LastEditors: zhujian
  * @Description: In User Settings Edit
  * @FilePath: /tianjia_manage_fe/src/services/module.ts
@@ -44,7 +44,7 @@ export const useModuleList = (params: any) =>
  * @param aid
  */
 export async function getModuleDetail(mid: string): Promise<ModuleDetail> {
-  return request(`${apiBasePath}/platform/module/getDetail?mid=${mid}`);
+  return request(`${apiBasePath}/common/module/getDetail?mid=${mid}`);
 }
 
 /**

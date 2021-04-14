@@ -82,8 +82,7 @@ export interface Article {
 }
 
 export interface ImportArticle extends Article {
-  importedBy: string;
-  importTime: string;
+  isTop: boolean;
 }
 
 export interface UploadApi extends BaseResponse {
@@ -132,7 +131,7 @@ export interface CreateModuleTypes {
   mid?: string;
   moduleName: string;
   moduleDesc: string;
-  moduleContent: Article[];
+  moduleContent: ImportArticle[];
 }
 export interface ModuleTypes extends CreateModuleTypes {
   mid: string;

@@ -1,3 +1,10 @@
+/*
+ * @Author: zhujian1995@outlook.com
+ * @Date: 2021-01-13 17:31:39
+ * @LastEditors: zhujian
+ * @LastEditTime: 2021-04-15 00:52:48
+ * @Description: 你 kin 你擦
+ */
 import React, { useCallback } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { Table } from 'antd';
@@ -5,7 +12,7 @@ import type { TableProps } from 'antd';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
-import type { Article } from '@/types/apiTypes';
+import type { Article, ImportArticle } from '@/types/apiTypes';
 
 const type = 'DragableBodyRow';
 
@@ -47,8 +54,8 @@ const DragableBodyRow = ({ index, moveRow, className, style, ...restProps }: any
 
 interface DragSortingTableProps {
   tableColumns: any[];
-  dataSource: Article[];
-  setDataSource: Dispatch<SetStateAction<Article[]>>;
+  dataSource: ImportArticle[];
+  setDataSource: Dispatch<SetStateAction<ImportArticle[]>>;
   tableProps: TableProps<Article>;
 }
 

@@ -22,7 +22,7 @@ export default function Uploader(props: UploadProps) {
     maxSize,
     ratio,
     listType = 'picture-card',
-    accept = 'image/png,image/jpg',
+    accept = 'image/*',
     uploadTxt = '上传',
     initFileList,
     onChange,
@@ -65,6 +65,7 @@ export default function Uploader(props: UploadProps) {
 
   function handleChange(info: UploadChangeParam) {
     let { fileList: newFileList } = info;
+    console.log(info);
     // 截取num
     newFileList = newFileList.slice(-num);
     newFileList.forEach((file: UploadFile) => {
@@ -90,7 +91,8 @@ export default function Uploader(props: UploadProps) {
   );
 
   function checkFile(file: RcFile) {
-    if (accept === 'image/png,image/jpg') {
+    console.log(file);
+    if (accept === 'image/*') {
       // 验证图片大小
       if (maxSize && maxSize < file.size) {
         onInvalid && onInvalid(`图片超过最大限制: ${maxSize / 1000}KB以内`);

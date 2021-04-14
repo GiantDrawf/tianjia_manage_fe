@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Modal, Table, Button } from 'antd';
+import { useCallback, useState } from 'react';
+import { Modal, Table, Button, Tooltip } from 'antd';
 import { aTypeMap, simpleArticleSearchFormItems } from '@/utils/const';
 import { Article, GetArticleParams } from '@/types/apiTypes';
 import QueryList, { OnSearch } from '../QueryList';
@@ -39,10 +39,13 @@ export default function SelectArticleModal(props: SelectArticleModalProps) {
       dataIndex: 'title',
       key: 'title',
       width: 250,
+      ellipsis: true,
       render: (title: string, record: Article) => (
-        <a href={`/#/article/edit/${record.aid}`} target="_blank">
-          {title}
-        </a>
+        <Tooltip title={title}>
+          <a href={`/#/article/edit/${record.aid}`} target="_blank">
+            {title}
+          </a>
+        </Tooltip>
       ),
     },
     {
@@ -74,7 +77,7 @@ export default function SelectArticleModal(props: SelectArticleModalProps) {
   }, [selectedArticles, handleImportArticle]);
 
   return (
-    <Modal width={800} title="添加文章" visible={modalVisible} onCancel={onCancel} footer={null}>
+    <Modal width={900} title="添加文章" visible={modalVisible} onCancel={onCancel} footer={null}>
       <QueryList
         {...{
           formItem: simpleArticleSearchFormItems,
@@ -95,6 +98,7 @@ export default function SelectArticleModal(props: SelectArticleModalProps) {
           rowKey="aid"
           pagination={false}
           scroll={{ y: 250 }}
+          size="small"
           rowSelection={{
             onChange: (_, selectedRows: Article[]) => setSelectedArticles(selectedRows),
           }}

@@ -157,7 +157,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
           return (
             <Uploader
               {...comProps}
-              accept="image/png,image/jpg"
+              accept="image/*"
               onInvalid={(errString: string) => form.setFields([{ name, errors: [errString] }])}
             />
           );

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, Fragment, useCallback } from 'react';
-import { Button, message, Popconfirm, Row } from 'antd';
+import { Button, message, Popconfirm, Row, Checkbox } from 'antd';
 import { useParams, Link, history } from 'umi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { Article, CreateModuleTypes, ImportArticle } from '@/types/apiTypes';
@@ -15,7 +15,7 @@ export default function CreateModule() {
   const { mid } = useParams<{ mid: string | undefined }>();
   const [module, setModule] = useState<CreateModuleTypes | any>({ mid });
   const [articleListModalShow, setArticleListModalShow] = useState<boolean>(false);
-  const [contentList, setContentList] = useState<Article[]>([]);
+  const [contentList, setContentList] = useState<ImportArticle[]>([]);
   const formRef = useRef<FormRefBindFunc>(null);
   const autoReturnTimer = useRef<any>(null);
 
@@ -50,18 +50,20 @@ export default function CreateModule() {
   );
 
   const handleImportArticle = useCallback((newArticles: Article[]) => {
-    setContentList((prevList: Article[]) => {
-      const notRepeatArticles = newArticles.filter((newArticle) => {
-        let notRepeat = true;
+    setContentList((prevList: ImportArticle[]) => {
+      const notRepeatArticles = newArticles
+        .filter((newArticle) => {
+          let notRepeat = true;
 
-        prevList.forEach((oldArticle) => {
-          if (oldArticle.aid === newArticle.aid) {
-            notRepeat = false;
-          }
-        });
+          prevList.forEach((oldArticle) => {
+            if (oldArticle.aid === newArticle.aid) {
+              notRepeat = false;
+            }
+          });
 
-        return notRepeat;
-      });
+          return notRepeat;
+        })
+        .map((newArticle) => ({ ...newArticle, isTop: false }));
 
       if (notRepeatArticles.length === 0) {
         message.error('请勿重复导入文章!');
@@ -82,7 +84,7 @@ export default function CreateModule() {
       .then((fields) => {
         // 精简文章保存数据
         function simpleArticleData(contentList: ImportArticle[]) {
-          return contentList.map((item) => item.aid);
+          return contentList.map((item) => ({ aid: item.aid, isTop: item.isTop || false }));
         }
 
         return { ...fields, moduleContent: simpleArticleData(contentList as ImportArticle[]) };
@@ -103,12 +105,34 @@ export default function CreateModule() {
       });
   }, [contentList, mid]);
 
+  const handleArticleIsTopChange = useCallback(
+    (checked: boolean, aid: string) => {
+      const newContentList = (contentList as ImportArticle[]).map((itemArticle: ImportArticle) => ({
+        ...itemArticle,
+        isTop: aid === itemArticle.aid ? checked : itemArticle.isTop,
+      }));
+      setContentList([...newContentList]);
+    },
+    [contentList],
+  );
+
   const contentColumns = [
+    {
+      title: '置顶',
+      dataIndex: 'isTop',
+      key: 'isTop',
+      render: (isTop: boolean, record: ImportArticle) => (
+        <Checkbox
+          checked={isTop}
+          onChange={(e) => handleArticleIsTopChange(e.target.checked, record.aid)}
+        />
+      ),
+    },
     {
       title: '序号',
       dataIndex: 'order',
       key: 'order',
-      render: (_: any, record: any, index: number) => index + 1,
+      render: (_: any, __: any, index: number) => index + 1,
     },
     {
       title: '文章Id',
@@ -178,11 +202,11 @@ export default function CreateModule() {
         formItemLayout={{ labelCol: { span: 4 }, wrapperCol: { span: 20 } }}
       />
       <Row justify="space-between" style={{ marginBottom: 10 }}>
-        <Button type="primary" onClick={handleSaveOrUpdateModule}>
-          保存模块
-        </Button>
-        <Button type="ghost" onClick={() => setArticleListModalShow(true)}>
+        <Button type="primary" onClick={() => setArticleListModalShow(true)}>
           添加文章
+        </Button>
+        <Button type="ghost" onClick={handleSaveOrUpdateModule}>
+          保存模块
         </Button>
       </Row>
       <DragSortingTable
