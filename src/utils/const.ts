@@ -198,66 +198,6 @@ export const simpleArticleSearchFormItems = [
   },
 ];
 
-export const articleFormItems = [
-  {
-    name: 'title',
-    label: '标题',
-    renderCom: 'input',
-    span: 24,
-    itemProps: {
-      rules: [{ required: true, message: '请填写标题' }],
-    },
-  },
-  {
-    name: 'summary',
-    label: '摘要',
-    renderCom: 'textArea',
-    span: 24,
-  },
-  {
-    name: 'type',
-    label: '类型',
-    renderCom: 'radio',
-    span: 24,
-    checkOptions: [
-      { label: '普通文章', value: 'article' },
-      { label: '幻灯', value: 'slide' },
-    ],
-    itemProps: {
-      rules: [{ required: true, message: '请选择类型' }],
-    },
-  },
-  {
-    name: 'thumbnail',
-    label: '封面图',
-    renderCom: 'upload',
-    span: 24,
-    comProps: {
-      num: 1,
-      maxSize: 200 * 1000,
-    },
-    itemProps: {
-      valuePropName: 'initFileList',
-      extra:
-        '仅可设置一张，用于微信分享展示(如未设置将尝试从图片中获取第一张)，格式png/jpg, 大小200KB以内',
-    },
-  },
-  {
-    name: 'thumbnails',
-    label: '图片',
-    renderCom: 'upload',
-    span: 24,
-    comProps: {
-      num: 0,
-      maxSize: 200 * 1000,
-      listType: 'picture',
-    },
-    itemProps: {
-      valuePropName: 'initFileList',
-      extra: '张数不限，格式png/jpg, 大小200KB以内',
-    },
-  },
-];
 export const aidFormItem = [
   {
     name: 'aid',

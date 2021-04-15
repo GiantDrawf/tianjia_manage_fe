@@ -22,5 +22,6 @@ module.exports = {
     'object-shorthand': 0,
     'react/sort-comp': 0,
     '@typescript-eslint/consistent-type-imports': 0,
+    'react/no-array-index-key': 0,
   },
 };

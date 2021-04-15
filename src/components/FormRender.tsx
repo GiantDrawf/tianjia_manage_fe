@@ -59,6 +59,7 @@ export interface FormRefBindFunc {
   resetFields: (fields?: NamePath[]) => void;
   validateFields: ValidateFields;
   setFields: (fields: FieldData[]) => void;
+  getFieldValue: (name: NamePath) => any;
 }
 
 const FormRender: ForwardRefRenderFunction<unknown, Props> = (
@@ -81,6 +82,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
     resetFields: form.resetFields,
     validateFields: form.validateFields,
     setFields: form.setFields,
+    getFieldValue: form.getFieldValue,
   }));
 
   const getChildren = useCallback(
@@ -159,6 +161,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
               {...comProps}
               accept="image/*"
               onInvalid={(errString: string) => form.setFields([{ name, errors: [errString] }])}
+              clearErrors={() => form.setFields([{ name, errors: [] }])}
             />
           );
         case 'checkbox':

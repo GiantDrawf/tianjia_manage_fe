@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Upload, Button, message } from 'antd';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { upload } from '@/services/upload';
@@ -27,7 +27,9 @@ export default function Uploader(props: UploadProps) {
     initFileList,
     onChange,
     onInvalid,
+    clearErrors,
   } = props;
+
   const [fileList, setFileList] = useState<Array<UploadFile<UploadResData>>>(() => {
     if (initFileList) {
       return initFileList.split(',').map((itemFile: string) => ({
@@ -48,6 +50,26 @@ export default function Uploader(props: UploadProps) {
     return [];
   });
 
+  useEffect(() => {
+    if (initFileList) {
+      setFileList(
+        (initFileList.split(',').map((itemFile: string) => ({
+          uid: itemFile,
+          name: itemFile,
+          status: 'done',
+          url: itemFile,
+          size: 200,
+          type: '',
+          response: {
+            data: {
+              url: itemFile,
+            },
+          },
+        })) as unknown) as Array<UploadFile<UploadResData>>,
+      );
+    }
+  }, [initFileList]);
+
   const getChangeFile = useCallback(
     (files: UploadFile<UploadResData>[]) => {
       if (onChange) {
@@ -59,13 +81,13 @@ export default function Uploader(props: UploadProps) {
         });
         onChange(fileArr.join(','));
       }
+      clearErrors && clearErrors();
     },
-    [onChange],
+    [onChange, clearErrors],
   );
 
   function handleChange(info: UploadChangeParam) {
     let { fileList: newFileList } = info;
-    console.log(info);
     // 截取num
     newFileList = newFileList.slice(-num);
     newFileList.forEach((file: UploadFile) => {
@@ -91,7 +113,6 @@ export default function Uploader(props: UploadProps) {
   );
 
   function checkFile(file: RcFile) {
-    console.log(file);
     if (accept === 'image/*') {
       // 验证图片大小
       if (maxSize && maxSize < file.size) {

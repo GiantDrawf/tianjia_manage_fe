@@ -1,4 +1,12 @@
+/*
+ * @Author: zhujian1995@outlook.com
+ * @Date: 2020-11-17 15:16:36
+ * @LastEditors: zhujian
+ * @LastEditTime: 2021-04-15 17:28:45
+ * @Description: 你 kin 你擦
+ */
 import { parse } from 'querystring';
+import { useCallback, useRef } from 'react';
 import { history } from 'umi';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
@@ -48,7 +56,9 @@ export const checkRedirect = () => {
 
 /**
  * 获取文中所有图片
- * @param str
+ * @param {string} str 文章内容
+ * @param {boolean} filterUnLocalImg 是否筛选出非本地图片
+ * @return {string[]} imgArr
  */
 export const getImgSrcInContent = (str: string, filterUnLocalImg?: boolean): string[] => {
   if (!str) return [];
@@ -75,3 +85,19 @@ export const getImgSrcInContent = (str: string, filterUnLocalImg?: boolean): str
       }) || []
   );
 };
+
+/**
+ * @description: 获取[start, end)之间的随机整数
+ * @param {number} start 起始位置
+ * @param {number} end 终止位置
+ * @return {Number} random integer
+ */
+export const getRandomIntWithInRange = (start: number, end: number) =>
+  Math.floor(Math.random() * (end - start)) + start;
+
+export function useRefCallback<T extends (...args: any[]) => any>(callback: T) {
+  const callbackRef = useRef(callback);
+  callbackRef.current = callback;
+
+  return useCallback((...args: any[]) => callbackRef.current(...args), []) as T;
+}

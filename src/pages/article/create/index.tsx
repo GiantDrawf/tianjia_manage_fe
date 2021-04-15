@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Button, message } from 'antd';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Button, Col, Input, message, notification, Row } from 'antd';
 import { useParams, history } from 'umi';
 import EditorBlock from '@/components/EditorBlock/asyncEditor';
 import { Article } from '@/types/apiTypes';
 import FormRender, { FormRefBindFunc } from '@/components/FormRender';
 import { createArticle, getArticleDetail, updateActicle } from '@/services/article';
 import styles from './index.less';
-import { aidFormItem, articleFormItems } from '@/utils/const';
+import { aidFormItem } from '@/utils/const';
+import { getImgSrcInContent, getRandomIntWithInRange, useRefCallback } from '@/utils/utils';
 
 /**
  * 新建文章页面
@@ -17,6 +18,7 @@ export default function CreateArticle() {
   const [latestContent, setLatestContent] = useState<string>('');
   const formRef = useRef<FormRefBindFunc>(null);
   const autoReturnTimer = useRef<any>(null);
+  const [inputThumbTxt, setInputThumbTxt] = useState<string>('');
 
   function handleSaveOrUpdate() {
     formRef.current
@@ -84,6 +86,150 @@ export default function CreateArticle() {
       }
     };
   }, [aid]);
+
+  const setArticleThumb = useRefCallback((thumbnail) => {
+    formRef.current?.setFields([{ name: 'thumbnail', value: thumbnail }]);
+  });
+
+  /**
+   * @description: 智能抓取缩略图
+   * @return {void}
+   */
+  const intelligentGrabImg = useCallback(() => {
+    const imgsInArticle = getImgSrcInContent(latestContent, false);
+    const thumbnails = formRef.current?.getFieldValue('thumbnails') as string;
+    const allImgsWaitForChoice = thumbnails
+      ? imgsInArticle.concat(thumbnails.split(','))
+      : imgsInArticle;
+
+    if (allImgsWaitForChoice && allImgsWaitForChoice.length) {
+      const randomInt = getRandomIntWithInRange(0, allImgsWaitForChoice.length);
+      setArticleThumb(allImgsWaitForChoice[randomInt]);
+    } else {
+      notification['warning']({
+        message: '智能抓取缩略图失败',
+        description: (
+          <div>
+            <p>可能的原因: </p>
+            {['1、文中无图片.', '3、文中图片未执行本地化操作', '3、未上传图片'].map(
+              (itemReason: string, index: number) => (
+                <p key={index}>{itemReason}</p>
+              ),
+            )}
+          </div>
+        ),
+      });
+    }
+  }, [latestContent, setArticleThumb]);
+
+  /**
+   * @description: 输入框的值设置缩略图
+   * @return {void}
+   */
+  const setThumbWithInput = useCallback(() => {
+    if (inputThumbTxt) {
+      setArticleThumb(inputThumbTxt);
+    }
+  }, [inputThumbTxt, setArticleThumb]);
+
+  const articleFormItems = [
+    {
+      name: 'title',
+      label: '标题',
+      renderCom: 'input',
+      span: 24,
+      itemProps: {
+        rules: [{ required: true, message: '请填写标题' }],
+      },
+    },
+    {
+      name: 'summary',
+      label: '摘要',
+      renderCom: 'textArea',
+      span: 24,
+    },
+    {
+      name: 'type',
+      label: '类型',
+      renderCom: 'radio',
+      span: 24,
+      checkOptions: [
+        { label: '普通文章', value: 'article' },
+        { label: '幻灯', value: 'slide' },
+      ],
+      itemProps: {
+        rules: [{ required: true, message: '请选择类型' }],
+      },
+    },
+    {
+      name: 'thumbnail',
+      label: '封面图',
+      renderCom: 'upload',
+      span: 24,
+      comProps: {
+        num: 1,
+        maxSize: 200 * 1000,
+      },
+      itemProps: {
+        valuePropName: 'initFileList',
+        extra: (
+          <Row align="middle">
+            <Col md={{ span: 14 }} sm={24}>
+              <Input
+                size="small"
+                allowClear
+                onChange={(e) => setInputThumbTxt(e.target.value)}
+                onPressEnter={setThumbWithInput}
+              />
+            </Col>
+            <Col md={{ span: 10 }}>
+              <Button
+                disabled={!inputThumbTxt}
+                size="small"
+                type="primary"
+                style={{ margin: '0px 5px' }}
+                onClick={setThumbWithInput}
+              >
+                设置
+              </Button>
+              <Button size="small" type="primary" onClick={intelligentGrabImg}>
+                智能抓取
+              </Button>
+            </Col>
+            <p>
+              仅可设置一张，用于微信分享展示(如未设置将尝试从图片中获取第一张)，格式png/jpg,
+              大小200KB以内
+              <a href="https://compressjpeg.com/zh/" target="_blank">
+                点此去压缩
+              </a>
+            </p>
+          </Row>
+        ),
+      },
+    },
+    {
+      name: 'thumbnails',
+      label: '图片',
+      renderCom: 'upload',
+      span: 24,
+      comProps: {
+        num: 0,
+        maxSize: 200 * 1000,
+        listType: 'picture',
+      },
+      itemProps: {
+        valuePropName: 'initFileList',
+        extra: (
+          <span>
+            张数不限，格式png/jpg, 大小200KB以内
+            <a href="https://compressjpeg.com/zh/" target="_blank">
+              点此去压缩
+            </a>
+          </span>
+        ),
+      },
+    },
+  ];
 
   return (
     <div className={styles.wrapper}>
