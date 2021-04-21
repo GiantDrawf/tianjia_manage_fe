@@ -16,7 +16,10 @@ export default function ArticleList() {
     query: {},
     pagination: {
       page: 1,
-      pageSize: 10,
+      pageSize: 50,
+    },
+    sort: {
+      createTime: -1, // 默认按照创建时间倒序排
     },
   });
   const onSearch = useCallback(({ searchParam, pageInfo }: OnSearch) => {
@@ -24,7 +27,7 @@ export default function ArticleList() {
       query: { ...searchParam },
       pagination: {
         page: pageInfo.pageNo,
-        pageSize: pageInfo.pageSize || 10,
+        pageSize: pageInfo.pageSize || 50,
       },
     });
   }, []);
@@ -88,6 +91,7 @@ export default function ArticleList() {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      sorter: true,
     },
     {
       title: '更新人',
@@ -116,9 +120,19 @@ export default function ArticleList() {
     },
   ];
 
+  const handleTableChange = useCallback((_, __, sorter) => {
+    setQueryParams((prevParams) => ({
+      ...prevParams,
+      sort: {
+        [`${sorter.field}`]: sorter.order === 'ascend' ? 1 : -1,
+      },
+    }));
+  }, []);
+
   return (
     <QueryList
       {...{
+        initialValues: { pageSize: 50 },
         formItem: articleSearchFormItems,
         total,
         onSearch,
@@ -136,6 +150,7 @@ export default function ArticleList() {
         dataSource={dataSource}
         rowKey="aid"
         pagination={false}
+        onChange={handleTableChange}
       />
     </QueryList>
   );

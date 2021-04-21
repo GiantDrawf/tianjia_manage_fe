@@ -23,6 +23,7 @@ import { LabeledValue } from 'antd/lib/select';
 import { FieldData, NamePath, ValidateFields } from 'rc-field-form/lib/interface';
 import { FormLayout } from 'antd/lib/form/Form';
 import Uploader from './Uploader';
+import { SizeType } from 'antd/es/config-provider/SizeContext';
 
 export interface FormItem {
   name: string;
@@ -50,6 +51,7 @@ export interface Props {
   items: FormItem[];
   formLayout?: FormLayout;
   formItemLayout?: FormItemLayout;
+  formSize?: 'small' | 'middle' | 'large' | 'default';
   onPressEnter?: () => any;
   initialValues?: { [keyName: string]: any };
   onFieldsChange?: (changedFields: FieldData[], allFields: FieldData[]) => void;
@@ -72,6 +74,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
     formItemLayout = formLayout === 'horizontal'
       ? { labelCol: { span: 4 }, wrapperCol: { span: 20 } }
       : {},
+    formSize = 'default',
     onPressEnter = () => {},
     onFieldsChange,
     initialValues,
@@ -203,6 +206,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
       form={form}
       initialValues={initialValues}
       onFieldsChange={handleFieldChange}
+      size={formSize as SizeType}
     >
       <Row gutter={24}>
         {items.map((item: FormItem) => {

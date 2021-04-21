@@ -17,7 +17,10 @@ export default function SelectArticleModal(props: SelectArticleModalProps) {
     query: {},
     pagination: {
       page: 1,
-      pageSize: 10,
+      pageSize: 100,
+    },
+    sort: {
+      createTime: -1, // 默认按照创建时间倒序排
     },
   });
   const [selectedArticles, setSelectedArticles] = useState<Article[]>([]);
@@ -80,7 +83,9 @@ export default function SelectArticleModal(props: SelectArticleModalProps) {
     <Modal width={900} title="添加文章" visible={modalVisible} onCancel={onCancel} footer={null}>
       <QueryList
         {...{
+          initialValues: { pageSize: 100 },
           formItem: simpleArticleSearchFormItems,
+          formSize: 'small',
           total,
           onSearch,
           plusAction: (

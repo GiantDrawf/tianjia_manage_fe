@@ -108,6 +108,7 @@ export interface GetArticleParams {
     updateTime?: string[];
   };
   pagination: { page: number; pageSize: number };
+  sort?: { [key: string]: any };
 }
 
 export interface ArticleDetail extends BaseResponse {
@@ -123,8 +124,10 @@ export interface LocalizationImgRes extends BaseResponse {
 export interface GetModuleParams {
   query: {
     mid?: string;
+    moduleName?: string;
   };
   pagination: { page: number; pageSize: number };
+  sort?: { [key: string]: any };
 }
 
 export interface CreateModuleTypes {

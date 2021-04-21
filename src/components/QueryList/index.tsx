@@ -20,11 +20,13 @@ export interface Props {
   formRef?: MutableRefObject<any>;
   onFieldsChange?: (changedFields: FieldData[], allFields: FieldData[]) => void;
   formItemLayout?: FormItemLayout;
+  formSize?: 'small' | 'middle' | 'large' | 'default';
 }
 
 const QueryList: FC<Props> = (props: Props) => {
   const {
     formItem,
+    formSize = 'default',
     total,
     onSearch,
     children,
@@ -68,6 +70,7 @@ const QueryList: FC<Props> = (props: Props) => {
         <FormRender
           ref={formRef}
           formItemLayout={formItemLayout}
+          formSize={formSize}
           items={formItem}
           onPressEnter={search}
           initialValues={defaultValues}
