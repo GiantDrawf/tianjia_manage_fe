@@ -86,6 +86,14 @@ export default [
             authority: ['admin'],
             component: './checkIn',
           },
+          // 抖音热门
+          {
+            name: 'douyinmanagement',
+            path: '/douyinmanagement',
+            icon: 'bar-chart',
+            authority: ['admin'],
+            component: './douyin',
+          },
           {
             component: './404',
           },

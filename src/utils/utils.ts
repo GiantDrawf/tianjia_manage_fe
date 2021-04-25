@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2020-11-17 15:16:36
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-15 17:28:45
+ * @LastEditTime: 2021-04-25 23:07:15
  * @Description: 你 kin 你擦
  */
 import { parse } from 'querystring';
@@ -100,4 +100,29 @@ export function useRefCallback<T extends (...args: any[]) => any>(callback: T) {
   callbackRef.current = callback;
 
   return useCallback((...args: any[]) => callbackRef.current(...args), []) as T;
+}
+
+export function formatDuration(time: number) {
+  let formatTime = '';
+  if (time > -1) {
+    const hour = Math.floor(time / 3600);
+    const min = Math.floor(time / 60) % 60;
+    const sec = time % 60;
+    if (hour < 10) {
+      formatTime = `0${hour}:`;
+    } else {
+      formatTime = `${hour}:`;
+    }
+
+    if (min < 10) {
+      formatTime += '0';
+    }
+    formatTime += `${min}:`;
+
+    if (sec < 10) {
+      formatTime += '0';
+    }
+    formatTime += sec;
+  }
+  return formatTime;
 }

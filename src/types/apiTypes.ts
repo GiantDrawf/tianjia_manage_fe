@@ -160,6 +160,14 @@ export interface GetCheckInListParams {
   pagination: { page: number; pageSize: number };
 }
 
+export interface GetDouyinVideoParams {
+  query: {
+    vid?: string;
+    title?: string;
+  };
+  pagination: { page: number; pageSize: number };
+}
+
 export interface CheckInItem {
   _id: string;
   name: string;
@@ -183,5 +191,35 @@ export interface PerformanceTypes extends BaseResponse {
     driveTotal: number;
     memUsed: number;
     memTotal: number;
+  };
+}
+
+export interface VideoStatistics {
+  comment_count: number;
+  digg_count: number;
+  share_count: number;
+}
+
+export interface ItemDouyinVideoStatistics {
+  [key: string]: VideoStatistics;
+}
+
+export interface DouyinVideoItem {
+  _id: string;
+  img_url: string;
+  link: string;
+  sec_item_id: number;
+  title: string;
+  vid: string;
+  author_user_id: string;
+  duration: number;
+  create_time: number;
+  city: string;
+  statistics: ItemDouyinVideoStatistics[];
+}
+export interface DouyinVideoItemList extends BaseResponse {
+  data: {
+    list: DouyinVideoItem[];
+    pagination: Pagination;
   };
 }

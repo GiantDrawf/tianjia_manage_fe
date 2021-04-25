@@ -275,3 +275,18 @@ export const checkInSearchFormItems = [
     renderCom: 'input',
   },
 ];
+
+export const douyinVideoSearchFormItems = [
+  {
+    name: 'vid',
+    label: '视频id',
+    span: 6,
+    renderCom: 'input',
+  },
+  {
+    name: 'title',
+    label: '视频标题',
+    span: 8,
+    renderCom: 'input',
+  },
+];
