@@ -88,11 +88,24 @@ export default [
           },
           // 抖音热门
           {
-            name: 'douyinmanagement',
-            path: '/douyinmanagement',
+            name: 'douyin',
+            path: '/douyin',
             icon: 'bar-chart',
             authority: ['admin'],
-            component: './douyin',
+            routes: [
+              {
+                name: 'videos',
+                path: '/douyin/videos',
+                icon: 'video-camera',
+                component: './douyin/videos',
+              },
+              {
+                name: 'users',
+                path: '/douyin/users',
+                icon: 'user',
+                component: './douyin/users',
+              },
+            ],
           },
           {
             component: './404',

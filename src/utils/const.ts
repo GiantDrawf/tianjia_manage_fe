@@ -290,3 +290,18 @@ export const douyinVideoSearchFormItems = [
     renderCom: 'input',
   },
 ];
+
+export const douyinUserSearchFormItems = [
+  {
+    name: 'author_name',
+    label: '账号名称',
+    span: 8,
+    renderCom: 'input',
+  },
+  {
+    name: 'sec_uid',
+    label: '账号加密ID',
+    span: 10,
+    renderCom: 'input',
+  },
+];

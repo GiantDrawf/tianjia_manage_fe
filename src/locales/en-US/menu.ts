@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-01-13 17:31:39
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-25 22:43:13
+ * @LastEditTime: 2021-04-27 14:07:35
  * @Description: 你 kin 你擦
  */
 export default {
@@ -25,5 +25,7 @@ export default {
   'menu.editArticle': 'Edit Article',
   'menu.module': 'Module Management',
   'menu.editModule': 'Edit Module',
-  'menu.douyinmanagement': 'Manage Douyin',
+  'menu.douyin': 'Manage Douyin',
+  'menu.douyin.videos': 'Manage Douyin Videos',
+  'menu.douyin.users': 'Manage Douyin Users',
 };

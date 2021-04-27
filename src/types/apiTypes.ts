@@ -168,6 +168,14 @@ export interface GetDouyinVideoParams {
   pagination: { page: number; pageSize: number };
 }
 
+export interface GetDouyinUserParams {
+  query: {
+    author_name?: string;
+    sec_uid?: string;
+  };
+  pagination: { page: number; pageSize: number };
+}
+
 export interface CheckInItem {
   _id: string;
   name: string;
@@ -205,7 +213,6 @@ export interface ItemDouyinVideoStatistics {
 }
 
 export interface DouyinVideoItem {
-  _id: string;
   img_url: string;
   link: string;
   sec_item_id: number;
@@ -220,6 +227,25 @@ export interface DouyinVideoItem {
 export interface DouyinVideoItemList extends BaseResponse {
   data: {
     list: DouyinVideoItem[];
+    pagination: Pagination;
+  };
+}
+
+export interface ItemDouyinUserStatistics {
+  [key: string]: VideoStatistics;
+}
+
+export interface DouyinUserItem {
+  author_thumb: string;
+  sec_uid: string;
+  author_name: number;
+  signature: string;
+  region: string;
+  statistics: ItemDouyinUserStatistics[];
+}
+export interface DouyinUserItemList extends BaseResponse {
+  data: {
+    list: DouyinUserItem[];
     pagination: Pagination;
   };
 }

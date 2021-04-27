@@ -2,12 +2,12 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-25 23:48:25
+ * @LastEditTime: 2021-04-27 14:26:08
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
-import { Table, message, Tooltip, Row } from 'antd';
-import { useDouyinVideoList } from '@/services/douyin';
+import { Table, message, Tooltip, Button } from 'antd';
+import { getAllBillboard, useDouyinVideoList } from '@/services/douyin';
 import { GetDouyinVideoParams, DouyinVideoItem, ItemDouyinVideoStatistics } from '@/types/apiTypes';
 import { douyinVideoSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
@@ -60,12 +60,6 @@ function DouyinVideoManagement() {
       ),
     },
     {
-      title: '封面',
-      dataIndex: 'img_url',
-      key: 'img_url',
-      render: (img_url: string) => <img src={img_url} height={100} />,
-    },
-    {
       title: '标题',
       dataIndex: 'title',
       key: 'title',
@@ -79,8 +73,8 @@ function DouyinVideoManagement() {
     },
     {
       title: '发布者',
-      dataIndex: 'author_user_id',
-      key: 'author_user_id',
+      dataIndex: 'sec_uid',
+      key: 'sec_uid',
     },
     {
       title: '时长',
@@ -142,6 +136,16 @@ function DouyinVideoManagement() {
     );
   }
 
+  const handleClickGrap = useCallback(() => {
+    getAllBillboard().then((res) => {
+      if (res && res.code === 200) {
+        message.success(res.data);
+      } else {
+        message.error(res.msg);
+      }
+    });
+  }, []);
+
   return (
     <Fragment>
       <QueryList
@@ -149,6 +153,7 @@ function DouyinVideoManagement() {
           formItem: douyinVideoSearchFormItems,
           total,
           onSearch,
+          plusAction: <Button onClick={handleClickGrap}>抓取</Button>,
         }}
       >
         <Table
