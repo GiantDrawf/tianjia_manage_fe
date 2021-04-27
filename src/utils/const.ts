@@ -276,16 +276,57 @@ export const checkInSearchFormItems = [
   },
 ];
 
+export const billboardTypesMap = {
+  3: '体育',
+  61: '二次元',
+  71: '美食',
+  81: '剧情',
+  86: '搞笑',
+  91: '旅游',
+  101: '游戏',
+  111: '汽车',
+};
+
 export const douyinVideoSearchFormItems = [
   {
     name: 'vid',
     label: '视频id',
-    span: 6,
+    span: 8,
     renderCom: 'input',
   },
   {
     name: 'title',
     label: '视频标题',
+    span: 8,
+    renderCom: 'input',
+  },
+  {
+    name: 'category',
+    label: '分类',
+    span: 8,
+    renderCom: 'select',
+    comProps: {
+      options: Object.keys(billboardTypesMap).map((itemKey) => ({
+        label: billboardTypesMap[itemKey],
+        value: Number(itemKey),
+      })),
+    },
+  },
+  {
+    name: 'author',
+    label: '视频作者',
+    span: 8,
+    renderCom: 'input',
+  },
+  {
+    name: 'uid',
+    label: '作者id',
+    span: 8,
+    renderCom: 'input',
+  },
+  {
+    name: 'music_author',
+    label: 'BGM作者',
     span: 8,
     renderCom: 'input',
   },
@@ -303,5 +344,17 @@ export const douyinUserSearchFormItems = [
     label: '账号加密ID',
     span: 10,
     renderCom: 'input',
+  },
+  {
+    name: 'category',
+    label: '分类',
+    span: 6,
+    renderCom: 'select',
+    comProps: {
+      options: Object.keys(billboardTypesMap).map((itemKey) => ({
+        label: billboardTypesMap[itemKey],
+        value: Number(itemKey),
+      })),
+    },
   },
 ];

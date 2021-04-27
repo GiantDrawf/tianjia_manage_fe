@@ -2,14 +2,14 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 14:56:43
+ * @LastEditTime: 2021-04-27 17:15:54
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
-import { Table, message } from 'antd';
+import { Table, message, Tooltip, Tag } from 'antd';
 import { useDouyinUserList } from '@/services/douyin';
 import { GetDouyinUserParams, ItemDouyinVideoStatistics, DouyinUserItem } from '@/types/apiTypes';
-import { douyinUserSearchFormItems } from '@/utils/const';
+import { billboardTypesMap, douyinUserSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { CopyOutlined } from '@ant-design/icons';
@@ -67,14 +67,27 @@ function DouyinVideoManagement() {
       ),
     },
     {
-      title: '账号名',
+      title: '昵称',
       dataIndex: 'author_name',
       key: 'author_name',
+      render: (author_name: string, record: DouyinUserItem) => (
+        <Tooltip title={author_name}>
+          <a href={record.link} target="_blank">
+            {author_name}
+          </a>
+        </Tooltip>
+      ),
     },
     {
       title: '简介',
       dataIndex: 'signature',
       key: 'signature',
+    },
+    {
+      title: '分类',
+      dataIndex: 'category',
+      key: 'category',
+      render: (category: number) => <Tag>{billboardTypesMap[`${category}`]}</Tag>,
     },
     {
       title: '国籍',
@@ -170,9 +183,10 @@ function DouyinVideoManagement() {
           columns={douyinVideoColumns}
           loading={loading}
           dataSource={dataSource}
-          rowKey="vid"
+          rowKey="sec_uid"
           pagination={false}
           expandedRowRender={renderExpandRow}
+          expandRowByClick
         />
       </QueryList>
     </Fragment>

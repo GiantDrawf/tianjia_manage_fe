@@ -237,6 +237,7 @@ export interface ItemDouyinUserStatistics {
 
 export interface DouyinUserItem {
   author_thumb: string;
+  link: string;
   sec_uid: string;
   author_name: number;
   signature: string;

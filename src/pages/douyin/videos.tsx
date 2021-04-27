@@ -2,14 +2,14 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 14:26:08
+ * @LastEditTime: 2021-04-27 17:36:55
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
-import { Table, message, Tooltip, Button } from 'antd';
+import { Table, message, Tooltip, Button, Tag } from 'antd';
 import { getAllBillboard, useDouyinVideoList } from '@/services/douyin';
 import { GetDouyinVideoParams, DouyinVideoItem, ItemDouyinVideoStatistics } from '@/types/apiTypes';
-import { douyinVideoSearchFormItems } from '@/utils/const';
+import { billboardTypesMap, douyinVideoSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { CopyOutlined } from '@ant-design/icons';
@@ -60,21 +60,45 @@ function DouyinVideoManagement() {
       ),
     },
     {
+      title: '封面',
+      dataIndex: 'img_url',
+      key: 'img_url',
+      render: (img_url: string) => <img src={img_url} height={100} />,
+    },
+    {
       title: '标题',
       dataIndex: 'title',
       key: 'title',
       render: (title: string, record: DouyinVideoItem) => (
         <Tooltip title={title}>
           <a href={record.link} target="_blank">
-            {title}
+            {title || `无标题 ${record.vid}`}
           </a>
         </Tooltip>
       ),
     },
     {
-      title: '发布者',
-      dataIndex: 'sec_uid',
-      key: 'sec_uid',
+      title: '标签',
+      dataIndex: 'tag',
+      key: 'tag',
+      render: (tag: string[]) =>
+        tag.filter((item) => item).map((itemTag) => <Tag color="#108ee9">{itemTag}</Tag>),
+    },
+    {
+      title: '分类',
+      dataIndex: 'category',
+      key: 'category',
+      render: (category: number) => <Tag>{billboardTypesMap[`${category}`]}</Tag>,
+    },
+    {
+      title: '视频作者',
+      dataIndex: 'author',
+      key: 'author',
+    },
+    {
+      title: '背景音乐作者',
+      dataIndex: 'music_author',
+      key: 'music_author',
     },
     {
       title: '时长',
@@ -163,6 +187,7 @@ function DouyinVideoManagement() {
           rowKey="vid"
           pagination={false}
           expandedRowRender={renderExpandRow}
+          expandRowByClick
         />
       </QueryList>
     </Fragment>
