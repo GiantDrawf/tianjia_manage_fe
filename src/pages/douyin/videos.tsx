@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 17:36:55
+ * @LastEditTime: 2021-04-27 21:24:57
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
@@ -16,6 +16,7 @@ import { CopyOutlined } from '@ant-design/icons';
 import { formatDuration } from '@/utils/utils';
 import moment from 'moment';
 import { Line } from '@ant-design/charts';
+import { Link } from 'umi';
 
 /**
  * 抖音热门视频列表
@@ -82,7 +83,13 @@ function DouyinVideoManagement() {
       dataIndex: 'tag',
       key: 'tag',
       render: (tag: string[]) =>
-        tag.filter((item) => item).map((itemTag) => <Tag color="#108ee9">{itemTag}</Tag>),
+        tag
+          .filter((item) => item)
+          .map((itemTag, index) => (
+            <Tag color="#108ee9" key={index}>
+              {itemTag}
+            </Tag>
+          )),
     },
     {
       title: '分类',
@@ -94,6 +101,9 @@ function DouyinVideoManagement() {
       title: '视频作者',
       dataIndex: 'author',
       key: 'author',
+      render: (author: string, record: DouyinVideoItem) => (
+        <Link to={{ pathname: '/douyin/users', state: { uid: record.uid } }}>{author}</Link>
+      ),
     },
     {
       title: '背景音乐作者',

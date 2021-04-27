@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 17:15:54
+ * @LastEditTime: 2021-04-27 21:29:00
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
@@ -19,9 +19,12 @@ import { Line } from '@ant-design/charts';
 /**
  * 抖音热门账号列表
  */
-function DouyinVideoManagement() {
+function DouyinUserManagement(props: any) {
+  const {
+    location: { state = {} },
+  } = props;
   const [queryParams, setQueryParams] = useState<GetDouyinUserParams>({
-    query: {},
+    query: state.uid ? { uid: state.uid } : {},
     pagination: {
       page: 1,
       pageSize: 10,
@@ -42,19 +45,19 @@ function DouyinVideoManagement() {
 
   const douyinVideoColumns = [
     {
-      title: 'id',
-      dataIndex: 'sec_uid',
-      key: 'sec_uid',
+      title: 'uid',
+      dataIndex: 'uid',
+      key: 'uid',
       width: 50,
-      render: (sec_uid: string) => (
+      render: (uid: string) => (
         <CopyToClipboard
-          text={sec_uid}
+          text={uid}
           style={{ color: '#1890ff' }}
           onCopy={() => {
-            message.success('id已复制到粘贴板');
+            message.success(`uid ${uid} 已复制到粘贴板`);
           }}
         >
-          <CopyOutlined title={`sec_uid ${sec_uid}，点击可复制`} />
+          <CopyOutlined title={`uid ${uid}，点击可复制`} />
         </CopyToClipboard>
       ),
     },
@@ -110,40 +113,39 @@ function DouyinVideoManagement() {
               itemQuota === 'aweme_count' ||
               itemQuota === 'following_count' ||
               itemQuota === 'total_favorited' ||
-              itemQuota === 'follower_count'
+              itemQuota === 'follower_count' ||
+              itemQuota === 'original_music_count' ||
+              itemQuota === 'original_music_used_count'
             ) {
+              let name = '粉丝数';
+              switch (itemQuota) {
+                case 'favoriting_count':
+                  name = '喜欢作品数';
+                  break;
+                case 'aweme_count':
+                  name = '作品数';
+                  break;
+                case 'following_count':
+                  name = '关注数';
+                  break;
+                case 'total_favorited':
+                  name = '赞';
+                  break;
+                case 'original_music_count':
+                  name = '原创BGM数';
+                  break;
+                case 'original_music_used_count':
+                  name = '原创BGM使用数';
+                  break;
+                default:
+                  break;
+              }
               lineData.push({
-                name:
-                  itemQuota === 'favoriting_count'
-                    ? '喜欢作品数'
-                    : itemQuota === 'aweme_count'
-                    ? '作品数'
-                    : itemQuota === 'following_count'
-                    ? '关注数'
-                    : itemQuota === 'total_favorited'
-                    ? '赞'
-                    : '粉丝数',
+                name,
                 date,
                 value: Number(
                   (itemStatistics[itemDate] && itemStatistics[itemDate][itemQuota]) || 0,
                 ),
-              });
-            } else if (itemQuota === 'original_musician') {
-              lineData.push({
-                name: '原创音乐数',
-                date,
-                value:
-                  (itemStatistics['original_musician'] &&
-                    itemStatistics['original_musician']['music_count']) ||
-                  0,
-              });
-              lineData.push({
-                name: '原创音乐被引用数',
-                date,
-                value:
-                  (itemStatistics['original_musician'] &&
-                    itemStatistics['original_musician']['music_used_count']) ||
-                  0,
               });
             }
           });
@@ -193,4 +195,4 @@ function DouyinVideoManagement() {
   );
 }
 
-export default DouyinVideoManagement;
+export default DouyinUserManagement;

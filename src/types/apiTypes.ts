@@ -170,8 +170,10 @@ export interface GetDouyinVideoParams {
 
 export interface GetDouyinUserParams {
   query: {
+    uid?: string;
     author_name?: string;
     sec_uid?: string;
+    category?: number;
   };
   pagination: { page: number; pageSize: number };
 }
@@ -218,7 +220,7 @@ export interface DouyinVideoItem {
   sec_item_id: number;
   title: string;
   vid: string;
-  author_user_id: string;
+  uid: string;
   duration: number;
   create_time: number;
   city: string;
@@ -238,6 +240,7 @@ export interface ItemDouyinUserStatistics {
 export interface DouyinUserItem {
   author_thumb: string;
   link: string;
+  uid: string;
   sec_uid: string;
   author_name: number;
   signature: string;
