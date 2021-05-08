@@ -35,14 +35,14 @@ export default [
             name: 'article',
             path: '/article',
             icon: 'picture',
-            authority: ['admin'],
+            authority: ['admin', 'tianjia'],
             component: './article/',
           },
           // 新建或编辑文章
           {
             name: 'editArticle',
             path: '/article/edit/:aid?',
-            authority: ['admin'],
+            authority: ['admin', 'tianjia'],
             hideInMenu: true,
             component: './article/create/',
           },
@@ -51,14 +51,14 @@ export default [
             name: 'module',
             path: '/module',
             icon: 'picture',
-            authority: ['admin'],
+            authority: ['admin', 'tianjia'],
             component: './module/',
           },
           // 新建或编辑模块
           {
             name: 'editModule',
             path: '/module/edit/:mid?',
-            authority: ['admin'],
+            authority: ['admin', 'tianjia'],
             hideInMenu: true,
             component: './module/create',
           },
@@ -67,7 +67,7 @@ export default [
             name: 'notice',
             path: '/notice',
             icon: 'message',
-            authority: ['admin'],
+            authority: ['admin', 'tianjia'],
             component: './notice',
           },
           // 用户管理
@@ -91,7 +91,7 @@ export default [
             name: 'douyin',
             path: '/douyin',
             icon: 'bar-chart',
-            authority: ['admin'],
+            authority: ['admin', 'douyin'],
             routes: [
               {
                 name: 'videos',

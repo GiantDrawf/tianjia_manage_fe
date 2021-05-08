@@ -1,6 +1,8 @@
 export const roleMap = {
-  admin: { label: '管理员', textColor: '#ff0000' },
   guest: { label: '游客', textColor: '#808080' },
+  admin: { label: '管理员', textColor: '#ff0000' },
+  tianjia: { label: '天佳内容运营', textColor: '#ff0000' },
+  douyin: { label: '抖音数据管理员', textColor: '#ff0000' },
 };
 
 export const aTypeMap = {

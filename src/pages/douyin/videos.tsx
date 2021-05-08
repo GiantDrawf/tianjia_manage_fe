@@ -2,12 +2,12 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 21:24:57
+ * @LastEditTime: 2021-05-08 15:59:19
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
-import { Table, message, Tooltip, Button, Tag } from 'antd';
-import { getAllBillboard, useDouyinVideoList } from '@/services/douyin';
+import { Table, message, Tooltip, Button, Tag, Row } from 'antd';
+import { downloadVideosOffline, getAllBillboard, useDouyinVideoList } from '@/services/douyin';
 import { GetDouyinVideoParams, DouyinVideoItem, ItemDouyinVideoStatistics } from '@/types/apiTypes';
 import { billboardTypesMap, douyinVideoSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
@@ -180,6 +180,18 @@ function DouyinVideoManagement() {
     });
   }, []);
 
+  const handleDownLoadAllData = useCallback(() => {
+    downloadVideosOffline()
+      .then((res) => {
+        if (res && res.code === 200) {
+          message.success(res.msg || '离线下载已开始，请耐心等待...');
+        } else {
+          message.error('下载失败');
+        }
+      })
+      .catch(() => message.error('下载失败'));
+  }, []);
+
   return (
     <Fragment>
       <QueryList
@@ -187,7 +199,14 @@ function DouyinVideoManagement() {
           formItem: douyinVideoSearchFormItems,
           total,
           onSearch,
-          plusAction: <Button onClick={handleClickGrap}>抓取</Button>,
+          plusAction: (
+            <Row>
+              <Button onClick={handleClickGrap}>抓取</Button>
+              <Button style={{ marginLeft: 10 }} type="primary" onClick={handleDownLoadAllData}>
+                离线下载视频数据
+              </Button>
+            </Row>
+          ),
         }}
       >
         <Table

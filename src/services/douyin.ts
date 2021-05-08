@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:32:44
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 14:32:41
+ * @LastEditTime: 2021-05-08 15:56:57
  * @Description: 你 kin 你擦
  */
 import useSWR from '@/hooks/useSWR';
@@ -12,6 +12,7 @@ import {
   DouyinVideoItemList,
   GetDouyinUserParams,
   DouyinUserItemList,
+  BaseResponse,
 } from '@/types/apiTypes';
 
 const { apiBasePath } = process['CONFIG'];
@@ -21,16 +22,13 @@ const { apiBasePath } = process['CONFIG'];
  * @param params
  */
 export const useDouyinVideoList = (params: GetDouyinVideoParams) => {
-  return useSWR<{ data: DouyinVideoItemList }>(
-    [`${apiBasePath}/platform/douyin/video/query`, params],
-    {
-      fetcher: (url: string) =>
-        request(url, {
-          method: 'POST',
-          data: params,
-        }),
-    },
-  );
+  return useSWR<DouyinVideoItemList>([`${apiBasePath}/platform/douyin/video/query`, params], {
+    fetcher: (url: string) =>
+      request(url, {
+        method: 'POST',
+        data: params,
+      }),
+  });
 };
 
 /**
@@ -55,3 +53,9 @@ export const useDouyinUserList = (params: GetDouyinUserParams) => {
  * @return {Promise}
  */
 export const getAllBillboard = () => request(`${apiBasePath}/douyin/getAllBillboard`);
+
+/**
+ * @description: 离线下载所有视频数据
+ */
+export const downloadVideosOffline = (): Promise<BaseResponse> =>
+  request(`${apiBasePath}/douyin/downloadVideosOffline`);
