@@ -2,12 +2,12 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 21:29:00
+ * @LastEditTime: 2021-05-09 23:23:52
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
-import { Table, message, Tooltip, Tag } from 'antd';
-import { useDouyinUserList } from '@/services/douyin';
+import { Table, message, Tooltip, Tag, Button } from 'antd';
+import { downloadUsersOffline, useDouyinUserList } from '@/services/douyin';
 import { GetDouyinUserParams, ItemDouyinVideoStatistics, DouyinUserItem } from '@/types/apiTypes';
 import { billboardTypesMap, douyinUserSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
@@ -172,6 +172,18 @@ function DouyinUserManagement(props: any) {
     );
   }
 
+  const handleDownLoadAllData = useCallback(() => {
+    downloadUsersOffline()
+      .then((res) => {
+        if (res && res.code === 200) {
+          message.success(res.msg || '离线下载已开始，请耐心等待...');
+        } else {
+          message.error('下载失败');
+        }
+      })
+      .catch(() => message.error('下载失败'));
+  }, []);
+
   return (
     <Fragment>
       <QueryList
@@ -179,6 +191,11 @@ function DouyinUserManagement(props: any) {
           formItem: douyinUserSearchFormItems,
           total,
           onSearch,
+          plusAction: (
+            <Button type="primary" onClick={handleDownLoadAllData}>
+              离线下载账号数据
+            </Button>
+          ),
         }}
       >
         <Table

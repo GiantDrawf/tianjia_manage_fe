@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:32:44
  * @LastEditors: zhujian
- * @LastEditTime: 2021-05-08 15:56:57
+ * @LastEditTime: 2021-05-09 23:05:52
  * @Description: 你 kin 你擦
  */
 import useSWR from '@/hooks/useSWR';
@@ -59,3 +59,9 @@ export const getAllBillboard = () => request(`${apiBasePath}/douyin/getAllBillbo
  */
 export const downloadVideosOffline = (): Promise<BaseResponse> =>
   request(`${apiBasePath}/douyin/downloadVideosOffline`);
+
+/**
+ * @description: 离线下载所有账号数据
+ */
+export const downloadUsersOffline = (): Promise<BaseResponse> =>
+  request(`${apiBasePath}/douyin/downloadUsersOffline`);
