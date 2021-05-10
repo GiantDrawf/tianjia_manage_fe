@@ -332,6 +332,15 @@ export const douyinVideoSearchFormItems = [
     span: 8,
     renderCom: 'input',
   },
+  {
+    name: 'create_time',
+    label: '创建时间',
+    span: 8,
+    renderCom: 'rangePicker',
+    comProps: {
+      showTime: false,
+    },
+  },
 ];
 
 export const douyinUserSearchFormItems = [

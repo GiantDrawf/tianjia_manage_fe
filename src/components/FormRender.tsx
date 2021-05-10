@@ -136,7 +136,7 @@ const FormRender: ForwardRefRenderFunction<unknown, Props> = (
         case 'rangePicker':
           return (
             <DatePicker.RangePicker
-              showTime
+              showTime={Object.keys(comProps).includes('showTime') ? comProps.showTime : true}
               ranges={{
                 今天: [moment().startOf('day'), moment().endOf('day')],
                 昨天: [

@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-05-09 23:24:09
+ * @LastEditTime: 2021-05-10 21:47:58
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
@@ -30,6 +30,14 @@ function DouyinVideoManagement() {
     },
   });
   const onSearch = useCallback(({ searchParam, pageInfo }: OnSearch) => {
+    if (searchParam?.create_time?.length) {
+      searchParam.create_time = [
+        Number(
+          moment(searchParam.create_time[0]).startOf('day').valueOf().toString().substr(0, 10),
+        ),
+        Number(moment(searchParam.create_time[1]).endOf('day').valueOf().toString().substr(0, 10)),
+      ];
+    }
     setQueryParams({
       query: { ...searchParam },
       pagination: {
