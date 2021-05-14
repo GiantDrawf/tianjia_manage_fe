@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-05-09 23:23:52
+ * @LastEditTime: 2021-05-14 11:46:56
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
@@ -12,9 +12,10 @@ import { GetDouyinUserParams, ItemDouyinVideoStatistics, DouyinUserItem } from '
 import { billboardTypesMap, douyinUserSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { CopyOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { Line } from '@ant-design/charts';
+import { FormItem } from '@/components/FormRender';
 
 /**
  * 抖音热门账号列表
@@ -96,6 +97,17 @@ function DouyinUserManagement(props: any) {
       title: '国籍',
       dataIndex: 'region',
       key: 'region',
+    },
+    {
+      title: '跟踪',
+      dataIndex: 'isTrack',
+      key: 'isTrack',
+      render: (isTrack: boolean) =>
+        isTrack ? (
+          <CheckOutlined style={{ color: 'green' }} />
+        ) : (
+          <CloseOutlined style={{ color: 'red' }} />
+        ),
     },
   ];
 
@@ -188,7 +200,8 @@ function DouyinUserManagement(props: any) {
     <Fragment>
       <QueryList
         {...{
-          formItem: douyinUserSearchFormItems,
+          formItem: douyinUserSearchFormItems as FormItem[],
+          formItemLayout: { labelCol: { span: 6 }, wrapperCol: { span: 18 } },
           total,
           onSearch,
           plusAction: (

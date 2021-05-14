@@ -341,37 +341,61 @@ export const douyinVideoSearchFormItems = [
       showTime: false,
     },
   },
+  {
+    name: 'isTrack',
+    label: '是否跟踪',
+    span: 8,
+    renderCom: 'select',
+    comProps: {
+      options: [
+        { label: '跟踪', value: true },
+        { label: '不跟踪', value: false },
+      ],
+    },
+  },
 ];
 
 export const douyinUserSearchFormItems = [
   {
     name: 'uid',
     label: 'uid',
-    span: 6,
+    span: 8,
     renderCom: 'input',
   },
   {
     name: 'sec_uid',
     label: 'sec_uid',
-    span: 7,
+    span: 8,
     renderCom: 'input',
   },
   {
     name: 'author_name',
     label: '昵称',
-    span: 6,
+    span: 8,
     renderCom: 'input',
   },
   {
     name: 'category',
     label: '分类',
-    span: 5,
+    span: 8,
     renderCom: 'select',
     comProps: {
       options: Object.keys(billboardTypesMap).map((itemKey) => ({
         label: billboardTypesMap[itemKey],
         value: Number(itemKey),
       })),
+    },
+  },
+  {
+    name: 'isTrack',
+    label: '是否跟踪',
+    span: 8,
+    renderCom: 'select',
+    comProps: {
+      options: [
+        { label: '跟踪', value: true },
+        { label: '不跟踪', value: false },
+      ],
     },
   },
 ];

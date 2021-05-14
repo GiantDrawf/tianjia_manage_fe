@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-04-25 22:31:51
  * @LastEditors: zhujian
- * @LastEditTime: 2021-05-10 21:47:58
+ * @LastEditTime: 2021-05-14 18:06:54
  * @Description: 你 kin 你擦
  */
 import React, { Fragment, useState, useCallback } from 'react';
@@ -12,11 +12,12 @@ import { GetDouyinVideoParams, DouyinVideoItem, ItemDouyinVideoStatistics } from
 import { billboardTypesMap, douyinVideoSearchFormItems } from '@/utils/const';
 import QueryList, { OnSearch } from '@/components/QueryList';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { CopyOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
 import { formatDuration } from '@/utils/utils';
 import moment from 'moment';
 import { Line } from '@ant-design/charts';
 import { Link } from 'umi';
+import { FormItem } from '@/components/FormRender';
 
 /**
  * 抖音热门视频列表
@@ -125,10 +126,27 @@ function DouyinVideoManagement() {
       render: formatDuration,
     },
     {
+      title: '清晰度',
+      dataIndex: 'ratio',
+      key: 'ratio',
+      render: (ratio: string) => ratio || '-',
+    },
+    {
       title: '创建时间',
       dataIndex: 'create_time',
       key: 'create_time',
       render: (create_time: number) => moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+    },
+    {
+      title: '跟踪',
+      dataIndex: 'isTrack',
+      key: 'isTrack',
+      render: (isTrack: boolean) =>
+        isTrack ? (
+          <CheckOutlined style={{ color: 'green' }} />
+        ) : (
+          <CloseOutlined style={{ color: 'red' }} />
+        ),
     },
   ];
 
@@ -181,7 +199,7 @@ function DouyinVideoManagement() {
   const handleClickGrap = useCallback(() => {
     getAllBillboard().then((res) => {
       if (res && res.code === 200) {
-        message.success(res.data);
+        message.success(res.msg || '离线抓取已开始，请耐心等待...');
       } else {
         message.error(res.msg);
       }
@@ -204,13 +222,14 @@ function DouyinVideoManagement() {
     <Fragment>
       <QueryList
         {...{
-          formItem: douyinVideoSearchFormItems,
+          formItem: douyinVideoSearchFormItems as FormItem[],
+          formItemLayout: { labelCol: { span: 6 }, wrapperCol: { span: 18 } },
           total,
           onSearch,
           plusAction: (
             <Row>
               <Button style={{ marginRight: 10 }} onClick={handleClickGrap}>
-                抓取
+                抓取榜单视频及账号
               </Button>
               <Button type="primary" onClick={handleDownLoadAllData}>
                 离线下载视频数据

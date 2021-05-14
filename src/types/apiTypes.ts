@@ -225,6 +225,8 @@ export interface DouyinVideoItem {
   create_time: number;
   city: string;
   statistics: ItemDouyinVideoStatistics[];
+  isTrack: boolean;
+  ratio: string;
 }
 export interface DouyinVideoItemList extends BaseResponse {
   data: {
@@ -246,6 +248,7 @@ export interface DouyinUserItem {
   signature: string;
   region: string;
   statistics: ItemDouyinUserStatistics[];
+  isTrack: boolean;
 }
 export interface DouyinUserItemList extends BaseResponse {
   data: {
