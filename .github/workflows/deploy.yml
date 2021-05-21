@@ -1,0 +1,35 @@
+name: github pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Node Env
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: SSH Server Deploy
+        uses: kostya-ten/ssh-server-deploy@v4
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          port: 22
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          scp_source: ./dist/
+          scp_target: /data/www/tianjia_manage_fe/
