@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Button, Col, Input, message, notification, Row } from 'antd';
-import { useParams, history } from 'umi';
+import { useParams, history, Link } from 'umi';
 import EditorBlock from '@/components/EditorBlock/asyncEditor';
-import { Article } from '@/types/apiTypes';
+import { Article, ModuleTypes } from '@/types/apiTypes';
 import FormRender, { FormRefBindFunc } from '@/components/FormRender';
 import { createArticle, getArticleDetail, updateActicle } from '@/services/article';
 import styles from './index.less';
 import { aidFormItem } from '@/utils/const';
 import { getImgSrcInContent, getRandomIntWithInRange, useRefCallback } from '@/utils/utils';
+import { getAllModules } from '@/services/module';
 
 /**
  * 新建文章页面
@@ -19,6 +20,7 @@ export default function CreateArticle() {
   const formRef = useRef<FormRefBindFunc>(null);
   const autoReturnTimer = useRef<any>(null);
   const [inputThumbTxt, setInputThumbTxt] = useState<string>('');
+  const [allModules, setAllModules] = useState<ModuleTypes[]>([]);
 
   function handleSaveOrUpdate() {
     formRef.current
@@ -78,6 +80,13 @@ export default function CreateArticle() {
         }
       });
     }
+
+    // 请求所有模块
+    getAllModules().then((res) => {
+      if (res && res.code === 200) {
+        setAllModules(res.data || []);
+      }
+    });
 
     return () => {
       // 清楚定时器
@@ -227,6 +236,23 @@ export default function CreateArticle() {
             </a>
           </span>
         ),
+      },
+    },
+    {
+      name: 'inModules',
+      label: '所属模块',
+      renderCom: 'checkbox',
+      span: 24,
+      checkOptions: allModules.map((item) => ({
+        label: (
+          <Link to={`/module/edit/${item.mid}`} target="_blank">
+            {item.moduleName}
+          </Link>
+        ),
+        value: item.mid,
+      })),
+      itemProps: {
+        extra: '可快速导入/移除模块(置顶操作需前往模块详情页)',
       },
     },
   ];

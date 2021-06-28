@@ -21,13 +21,18 @@ const GlobalHeaderRight: React.FC<NoticeIconProps> = (props) => {
   useEffect(() => {
     // 获取所有未读信息
     dispatch({ type: 'notice/getAllNotice' });
-    // 每30s刷新一次
-    refreshNoticeTimer.current = setInterval(() => {
-      dispatch({ type: 'notice/getAllNotice' });
-    }, 30 * 1000);
+    // 线上环境每30s刷新一次消息列表
+    if (process.env.NODE_ENV === 'production') {
+      // 每30s刷新一次
+      refreshNoticeTimer.current = setInterval(() => {
+        dispatch({ type: 'notice/getAllNotice' });
+      }, 30 * 1000);
+    }
 
     return () => {
-      clearInterval(refreshNoticeTimer.current);
+      if (refreshNoticeTimer.current) {
+        clearInterval(refreshNoticeTimer.current);
+      }
     };
   }, []);
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-30 17:03:22
- * @LastEditTime: 2021-04-13 15:33:21
+ * @LastEditTime: 2021-06-28 15:41:45
  * @LastEditors: zhujian
  * @Description: In User Settings Edit
  * @FilePath: /tianjia_manage_fe/src/services/module.ts
@@ -54,3 +54,10 @@ export async function getModuleDetail(mid: string): Promise<ModuleDetail> {
  */
 export const deleteModule = async (mid: string): Promise<BaseResponse> =>
   request(`${apiBasePath}/platform/module/delete?mid=${mid}`);
+
+/**
+ * 获取所有模块
+ * @returns {Promise<AllModule>}
+ */
+export const getAllModules = async (): Promise<AllModule> =>
+  request(`${apiBasePath}/platform/module/getAllModules`);
