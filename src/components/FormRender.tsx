@@ -38,7 +38,7 @@ export interface FormItem {
   };
   span?: number;
   itemProps?: {};
-  checkOptions?: { value: string; label: string }[];
+  checkOptions?: { value: string; label: string | ReactNode }[];
 }
 
 export interface FormItemLayout {
