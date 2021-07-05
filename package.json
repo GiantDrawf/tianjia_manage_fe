@@ -47,17 +47,17 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/charts": "^1.1.18",
+    "@ant-design/charts": "^1.1.20",
     "@ant-design/icons": "^4.6.2",
-    "@ant-design/pro-descriptions": "^1.8.4",
-    "@ant-design/pro-layout": "^6.19.7",
+    "@ant-design/pro-descriptions": "^1.8.6",
+    "@ant-design/pro-layout": "^6.21.0",
     "@ant-design/pro-table": "^2.43.0",
     "@umijs/route-utils": "^1.0.37",
-    "antd": "^4.16.5",
+    "antd": "^4.16.6",
     "classnames": "^2.3.1",
     "commitizen": "^4.2.4",
     "cz-emoji": "^1.3.1",
-    "husky": "^6.0.0",
+    "husky": "^7.0.0",
     "immutability-helper": "^3.1.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
@@ -73,10 +73,10 @@
     "react-use": "^17.2.4",
     "shelljs": "^0.8.4",
     "swr": "^0.5.6",
-    "umi": "^3.4.25",
+    "umi": "^3.5.2",
     "umi-request": "^1.3.9",
     "use-merge-value": "^1.0.2",
-    "wangeditor": "^4.7.4"
+    "wangeditor": "^4.7.5"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.1.1",
@@ -86,13 +86,13 @@
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.170",
     "@types/qs": "^6.9.6",
-    "@types/react": "^17.0.11",
+    "@types/react": "^17.0.13",
     "@types/react-dom": "^17.0.8",
     "@types/react-helmet": "^6.1.1",
     "@umijs/fabric": "^2.6.2",
     "@umijs/plugin-blocks": "^2.2.2",
     "@umijs/preset-ant-design-pro": "^1.3.2",
-    "@umijs/preset-react": "^1.8.13",
+    "@umijs/preset-react": "^1.8.14",
     "@umijs/preset-ui": "^2.2.9",
     "@umijs/yorkie": "^2.0.5",
     "carlo": "^0.9.46",
@@ -101,7 +101,7 @@
     "cross-port-killer": "^1.3.0",
     "detect-installer": "^1.0.2",
     "enzyme": "^3.11.0",
-    "eslint": "^7.29.0",
+    "eslint": "^7.30.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "express": "^4.17.1",
     "gh-pages": "^3.2.3",
@@ -110,9 +110,9 @@
     "mockjs": "^1.1.0",
     "prettier": "^2.3.2",
     "pro-download": "1.0.1",
-    "puppeteer-core": "^10.0.0",
+    "puppeteer-core": "^10.1.0",
     "stylelint": "^13.13.1",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   },
   "engines": {
     "node": ">=10.0.0"
