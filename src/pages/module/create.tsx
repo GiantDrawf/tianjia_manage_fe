@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, Fragment, useCallback } from 'react';
-import { Button, message, Popconfirm, Row, Checkbox } from 'antd';
+import { Button, message, Popconfirm, Row, Checkbox, Table } from 'antd';
 import { useParams, Link, history } from 'umi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { Article, CreateModuleTypes, ImportArticle } from '@/types/apiTypes';
@@ -9,7 +9,7 @@ import { aTypeMap, midFormItem, moduleFormItems } from '@/utils/const';
 import { createModule, getModuleDetail, updateModule } from '@/services/module';
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 import SelectArticleModal from '@/components/SelectArticleModal';
-import DragSortingTable from '@/components/DragSortingTable';
+import { sortTopAndCreateTime } from '@/utils/utils';
 
 export default function CreateModule() {
   const { mid } = useParams<{ mid: string | undefined }>();
@@ -74,7 +74,7 @@ export default function CreateModule() {
         `文章 ${notRepeatArticles.map((item) => `《${item.title}》`).join('、')} 导入成功`,
       );
 
-      return [...prevList, ...notRepeatArticles];
+      return sortTopAndCreateTime([...notRepeatArticles, ...prevList]);
     });
   }, []);
 
@@ -84,7 +84,11 @@ export default function CreateModule() {
       .then((fields) => {
         // 精简文章保存数据
         function simpleArticleData(contentList: ImportArticle[]) {
-          return contentList.map((item) => ({ aid: item.aid, isTop: item.isTop || false }));
+          return contentList.map((item) => ({
+            aid: item.aid,
+            isTop: item.isTop || false,
+            createTime: item.createTime,
+          }));
         }
 
         return { ...fields, moduleContent: simpleArticleData(contentList as ImportArticle[]) };
@@ -111,7 +115,7 @@ export default function CreateModule() {
         ...itemArticle,
         isTop: aid === itemArticle.aid ? checked : itemArticle.isTop,
       }));
-      setContentList([...newContentList]);
+      setContentList(sortTopAndCreateTime([...newContentList]));
     },
     [contentList],
   );
@@ -209,11 +213,12 @@ export default function CreateModule() {
           保存模块
         </Button>
       </Row>
-      <DragSortingTable
-        tableProps={{ locale: { emptyText: '暂无内容' }, rowKey: 'aid', pagination: false }}
-        tableColumns={contentColumns}
+      <Table
         dataSource={contentList}
-        setDataSource={setContentList}
+        columns={contentColumns}
+        locale={{ emptyText: '暂无内容' }}
+        rowKey="aid"
+        pagination={false}
       />
       <SelectArticleModal
         modalVisible={articleListModalShow}

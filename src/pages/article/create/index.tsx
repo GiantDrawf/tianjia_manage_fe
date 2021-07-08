@@ -33,6 +33,7 @@ export default function CreateArticle() {
         return {
           ...values,
           content: latestContent,
+          createTime: aid ? article.createTime : undefined,
         } as Article;
       })
       .catch((err) => {

@@ -79,6 +79,7 @@ export interface Article {
   thumbnail: string;
   thumbnails: string[] | Thumbnail[];
   content: string;
+  createTime: string;
 }
 
 export interface ImportArticle extends Article {

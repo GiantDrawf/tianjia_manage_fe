@@ -2,15 +2,18 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2020-11-17 15:16:36
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-25 23:07:15
+ * @LastEditTime: 2021-07-07 17:36:16
  * @Description: 你 kin 你擦
  */
+import { ImportArticle } from '@/types/apiTypes';
+import moment from 'moment';
 import { parse } from 'querystring';
 import { useCallback, useRef } from 'react';
 import { history } from 'umi';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
-const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
+const reg =
+  /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
 
 export const isUrl = (path: string): boolean => reg.test(path);
 
@@ -125,4 +128,16 @@ export function formatDuration(time: number) {
     formatTime += sec;
   }
   return formatTime;
+}
+
+export function sortTopAndCreateTime(array: ImportArticle[]) {
+  return array.sort((a, b) => {
+    return !a.isTop && b.isTop
+      ? 1
+      : a.isTop && !b.isTop
+      ? -1
+      : moment(a.createTime).isAfter(b.createTime)
+      ? -1
+      : 1;
+  });
 }
