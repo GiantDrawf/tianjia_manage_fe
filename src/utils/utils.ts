@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2020-11-17 15:16:36
  * @LastEditors: zhujian
- * @LastEditTime: 2021-07-07 17:36:16
+ * @LastEditTime: 2021-08-25 11:13:10
  * @Description: 你 kin 你擦
  */
 import { ImportArticle } from '@/types/apiTypes';
@@ -79,7 +79,7 @@ export const getImgSrcInContent = (str: string, filterUnLocalImg?: boolean): str
         if (filterUnLocalImg) {
           return (
             item.indexOf(
-              process.env.NODE_ENV === 'development' ? 'localhost:8080/' : 'tianjia.live/static',
+              process.env.NODE_ENV === 'development' ? 'localhost:8080/' : 'static.tianjia.live',
             ) < 0
           );
         }
