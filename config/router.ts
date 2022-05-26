@@ -107,6 +107,14 @@ export default [
               },
             ],
           },
+          // 定时任务
+          {
+            name: 'scheduledTask',
+            path: '/scheduledTask',
+            icon: 'schedule',
+            authority: ['admin'],
+            component: './scheduledTask',
+          },
           {
             component: './404',
           },
