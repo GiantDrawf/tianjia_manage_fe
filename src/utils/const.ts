@@ -3,6 +3,7 @@ export const roleMap = {
   admin: { label: '管理员', textColor: '#ff0000' },
   tianjia: { label: '天佳内容运营', textColor: '#ff0000' },
   douyin: { label: '抖音数据管理员', textColor: '#ff0000' },
+  taskManager: { label: '定时任务管理员', textColor: '#1890ff' },
 };
 
 export const aTypeMap = {
@@ -396,6 +397,56 @@ export const douyinUserSearchFormItems = [
         { label: '跟踪', value: true },
         { label: '不跟踪', value: false },
       ],
+    },
+  },
+];
+
+export const taskSearchFormItems = [
+  {
+    name: 'taskName',
+    label: '任务名',
+    span: 5,
+    renderCom: 'input',
+    comProps: {
+      placeholder: '支持模糊搜索',
+    },
+    itemProps: {
+      labelCol: { span: 6 },
+    },
+  },
+  {
+    name: 'taskDesc',
+    label: '任务描述',
+    span: 5,
+    renderCom: 'input',
+    comProps: {
+      placeholder: '支持模糊搜索',
+    },
+    itemProps: {
+      labelCol: { span: 6 },
+    },
+  },
+  {
+    name: 'taskTriggerTime',
+    label: '任务触发时间',
+    span: 8,
+    renderCom: 'rangePicker',
+    itemProps: {
+      labelCol: { span: 6 },
+    },
+  },
+  {
+    name: 'isCompleted',
+    label: '是否已完成',
+    span: 6,
+    renderCom: 'switch',
+    comProps: {
+      checkedChildren: '完成',
+      unCheckedChildren: '未完成',
+    },
+    itemProps: {
+      valuePropName: 'checked',
+      labelCol: { span: 6 },
     },
   },
 ];

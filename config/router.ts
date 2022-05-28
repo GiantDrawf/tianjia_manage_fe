@@ -112,7 +112,7 @@ export default [
             name: 'scheduledTask',
             path: '/scheduledTask',
             icon: 'schedule',
-            authority: ['admin'],
+            authority: ['admin', 'taskManager'],
             component: './scheduledTask',
           },
           {
