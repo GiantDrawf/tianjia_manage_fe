@@ -2,7 +2,7 @@
  * @Author: zhujian1995@outlook.com
  * @Date: 2021-01-13 17:31:39
  * @LastEditors: zhujian
- * @LastEditTime: 2021-04-27 14:08:05
+ * @LastEditTime: 2022-05-26 21:01:03
  * @Description: 你 kin 你擦
  */
 export default {
@@ -28,4 +28,5 @@ export default {
   'menu.douyin': '抖音数据分析',
   'menu.douyin.videos': '视频',
   'menu.douyin.users': '账号',
+  'menu.scheduledTask': '定时任务',
 };

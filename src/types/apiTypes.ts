@@ -257,3 +257,25 @@ export interface DouyinUserItemList extends BaseResponse {
     pagination: Pagination;
   };
 }
+
+export interface TaskItem {
+  taskId?: string;
+  taskName?: string;
+  taskDesc?: string;
+  taskTriggerTime?: string;
+  creator?: string;
+  createTime?: string;
+  updater?: string;
+  updateTime?: string;
+  isCompleted?: boolean;
+}
+
+export interface GetTaskParams {
+  query: TaskItem;
+  pagination: { page: number; pageSize: number };
+  sort?: { [key: string]: any };
+}
+
+export interface AllTask extends BaseResponse {
+  data: TaskItem[];
+}
